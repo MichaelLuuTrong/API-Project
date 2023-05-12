@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const bcrypt = require('bcryptjs');
+const { User } = require('../../db/models')
+const { setTokenCookie } = require('../../utils/auth')
 
 const validateSignup = [
     check('email')
