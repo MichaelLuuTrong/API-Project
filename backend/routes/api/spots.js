@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
         let reviewCounter = 0
         let starsCounter = 0
         spot.Reviews.forEach(review => {
-            // console.log(review.stars)
+            // console.log(review)
             starsCounter += review.stars;
             reviewCounter++
         })
