@@ -23,9 +23,27 @@ module.exports = {
       },
       {
         spotId: 3,
-        userId: 2,
+        userId: 1,
         review: 'A lot smaller than expected and could have been cleaner. Good location though.',
         stars: 3
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'There was an extremely strong perfume smell throughout the house.',
+        stars: 2
+      },
+      {
+        spotId: 2,
+        userId: 3,
+        review: 'Nice place but the neighbors were very loud.',
+        stars: 3
+      },
+      {
+        spotId: 3,
+        userId: 2,
+        review: 'I locked myself in the bathroom and the owner did not help me.',
+        stars: 2
       }
     ], {});
   },
