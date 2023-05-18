@@ -41,6 +41,56 @@ const validateSpot = [
     handleValidationErrors
 ];
 
+router.get('/:spotId', async (req, res) => {
+    const foundSpot = await Spot.findOne({
+        include: [
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            { model: User },
+            { model: Review }
+        ],
+        where: {
+            id: req.params.spotId
+        }
+    })
+
+    if (foundSpot) {
+        let JSONSpot = foundSpot.toJSON()
+
+        //REVIEW NUMBER AND AVERAGE
+        const reviewsArray = JSONSpot.Reviews;
+        let starTotal = 0;
+        let reviewTotal = 0;
+        reviewsArray.forEach(review => {
+            starTotal += review.stars;
+            reviewTotal++
+        })
+        let averageStars = (starTotal / reviewTotal);
+        JSONSpot.numReviews = reviewTotal;
+        JSONSpot.avgStarRating = averageStars;
+        delete JSONSpot.Reviews;
+
+        //OWNER INFO
+        JSONSpot.Owner = {
+            id: JSONSpot.User.id,
+            firstName: JSONSpot.User.firstName,
+            lastName: JSONSpot.User.lastName,
+        };
+        delete JSONSpot.User;
+
+        res.json(JSONSpot)
+    } else {
+        res.status(404).send({ message: "Spot couldn't be found" })
+    }
+})
+
+
+
+
+
+
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         include: [
