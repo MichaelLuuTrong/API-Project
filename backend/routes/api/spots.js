@@ -48,14 +48,16 @@ router.get('/:spotId', async (req, res) => {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview']
             },
-            { model: User },
+            {
+                model: User
+            },
             { model: Review }
         ],
         where: {
             id: req.params.spotId
         }
     })
-
+    // console.log(foundSpot)
     if (foundSpot) {
         let JSONSpot = foundSpot.toJSON()
         console.log(JSONSpot)
