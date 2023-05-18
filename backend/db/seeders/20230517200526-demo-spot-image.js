@@ -34,7 +34,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1, 2, 3] }
+      url: { [Op.in]: ['https://photos.zillowstatic.com/fp/abd81d606eeedd9fc24481f74514aba6-cc_ft_1536.webp', 'https://photos.zillowstatic.com/fp/e66d224d531fc49f8fd2b4dff41b0f78-uncropped_scaled_within_1536_1152.webp', 'https://photos.zillowstatic.com/fp/380087641f08c31b11564d886408951d-cc_ft_384.webp'] }
     }, {});
   }
 };
