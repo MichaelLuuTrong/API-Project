@@ -107,5 +107,36 @@ router.post('/', validateSpot, requireAuth, async (req, res) => {
     return res.json(newSpot)
 })
 
+router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
+    const spotToChange = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    });
+    if (spotToChange) {
+        await spotToChange.update({
+            id: req.params.spotId,
+            ownerId: req.user.dataValues.id,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            country: req.body.country,
+            lat: req.body.lat,
+            lng: req.body.lng,
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            createdAt: req.body.createdAt,
+            updatedAt: Date.now()
+
+        })
+        return res.json(spotToChange)
+    } else {
+        res.status(404).send({ message: "Spot couldn't be found" })
+    }
+
+
+})
+
 
 module.exports = router;
