@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
             },
             {
                 model: Review,
-                attributes: ['stars', 'userId']
+                attributes: ['stars']
             }
         ]
     });
