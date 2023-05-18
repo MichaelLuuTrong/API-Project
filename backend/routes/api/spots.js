@@ -113,29 +113,31 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
             id: req.params.spotId
         }
     });
-    if (spotToChange) {
-        await spotToChange.update({
-            id: req.params.spotId,
-            ownerId: req.user.dataValues.id,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            country: req.body.country,
-            lat: req.body.lat,
-            lng: req.body.lng,
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-            createdAt: req.body.createdAt,
-            updatedAt: Date.now()
+    if (req.user.dataValues.id === spotToChange.ownerId) {
+        if (spotToChange) {
+            await spotToChange.update({
+                id: req.params.spotId,
+                ownerId: req.user.dataValues.id,
+                address: req.body.address,
+                city: req.body.city,
+                state: req.body.state,
+                country: req.body.country,
+                lat: req.body.lat,
+                lng: req.body.lng,
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+                createdAt: req.body.createdAt,
+                updatedAt: Date.now()
 
-        })
-        return res.json(spotToChange)
+            })
+            return res.json(spotToChange)
+        } else {
+            res.status(404).send({ message: "Spot couldn't be found" })
+        }
     } else {
-        res.status(404).send({ message: "Spot couldn't be found" })
+        res.status(404).send({ message: "You are not the owner of that spot!" })
     }
-
-
 })
 
 
