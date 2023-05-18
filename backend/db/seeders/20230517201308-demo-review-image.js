@@ -29,7 +29,7 @@ module.exports = {
     options.tableName = 'ReviewImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      reviewId: { [Op.in]: [1, 2, 3] }
+      url: { [Op.in]: ['https://photos.zillowstatic.com/fp/ec614a08ba4b273e7f08083cb3d757ea-uncropped_scaled_within_1536_1152.webp', 'https://photos.zillowstatic.com/fp/1cebced06d0399af7232f79e8d9d21da-uncropped_scaled_within_1536_1152.webp', 'https://photos.zillowstatic.com/fp/ace1699e82a5d803cc5cbce1977a0a91-uncropped_scaled_within_1536_1152.webp'] }
     }, {});
   }
 };
