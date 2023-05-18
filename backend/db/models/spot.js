@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Review,
         foreignKey: 'spotId',
         otherKey: 'UserId'
-      })
+      });
+      Spot.hasMany(models.Booking, { foreignKey: 'spotId' });
+      Spot.hasMany(models.Review, { foreignKey: 'spotId' })
     }
   }
   Spot.init({
