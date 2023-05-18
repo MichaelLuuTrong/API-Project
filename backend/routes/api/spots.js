@@ -58,7 +58,7 @@ router.get('/:spotId', async (req, res) => {
 
     if (foundSpot) {
         let JSONSpot = foundSpot.toJSON()
-
+        console.log(JSONSpot)
         //REVIEW NUMBER AND AVERAGE
         const reviewsArray = JSONSpot.Reviews;
         let starTotal = 0;
