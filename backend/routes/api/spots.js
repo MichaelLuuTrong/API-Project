@@ -113,8 +113,8 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
             id: req.params.spotId
         }
     });
-    if (req.user.dataValues.id === spotToChange.ownerId) {
-        if (spotToChange) {
+    if (spotToChange) {
+        if (req.user.dataValues.id === spotToChange.ownerId) {
             await spotToChange.update({
                 id: req.params.spotId,
                 ownerId: req.user.dataValues.id,
@@ -129,14 +129,33 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
                 price: req.body.price,
                 createdAt: req.body.createdAt,
                 updatedAt: Date.now()
-
             })
             return res.json(spotToChange)
         } else {
-            res.status(404).send({ message: "Spot couldn't be found" })
+            res.status(404).send({ message: "You are not the owner of that spot!" })
+
         }
     } else {
-        res.status(404).send({ message: "You are not the owner of that spot!" })
+        res.status(404).send({ message: "Spot couldn't be found" })
+    }
+})
+
+router.delete('/:spotId', requireAuth, async (req, res) => {
+    const spotToDelete = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    });
+
+    if (spotToDelete) {
+        if (req.user.dataValues.id === spotToDelete.ownerId) {
+            await spotToDelete.destroy()
+            return res.send({ message: "Successfully deleted" })
+        } else {
+            res.status(404).send({ message: "You are not the owner of that spot!" })
+        }
+    } else {
+        res.status(404).send({ message: "Spot couldn't be found" })
     }
 })
 
