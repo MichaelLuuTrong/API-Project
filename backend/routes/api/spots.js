@@ -53,6 +53,7 @@ const validateReview = [
     handleValidationErrors
 ];
 
+//Get all Spots owned by the Current User//
 router.get('/current', requireAuth, async (req, res) => {
     const currentUserSpots = await Spot.findAll({
         where: { ownerId: req.user.dataValues.id },
@@ -67,6 +68,7 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         ]
     })
+
     let Spots = [];
     currentUserSpots.forEach(element => {
         Spots.push(element.toJSON())
@@ -105,6 +107,7 @@ router.get('/current', requireAuth, async (req, res) => {
     return res.json({ Spots })
 })
 
+//Get details of a Spot from an id//
 router.get('/:spotId', async (req, res) => {
     const foundSpot = await Spot.findOne({
         include: [
@@ -150,6 +153,7 @@ router.get('/:spotId', async (req, res) => {
     }
 })
 
+//Get all Spots
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         include: [
@@ -192,11 +196,10 @@ router.get('/', async (req, res) => {
         })
         delete spot.SpotImages
     })
-
-
     return res.json({ Spots })
 })
 
+//Create a Review for a Spot based on the Spot's id//
 router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) => {
     const spotToAddReviewTo = await Spot.findOne({
         where: {
@@ -238,6 +241,7 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) =>
     }
 })
 
+//Get all Reviews by a Spot's id//
 router.get('/:spotId/reviews', async (req, res) => {
     const Reviews = await Review.findAll({
         where: { spotId: req.params.spotId },
@@ -254,10 +258,9 @@ router.get('/:spotId/reviews', async (req, res) => {
         ]
     })
     return res.json({ Reviews })
-
-
 })
 
+//Add an Image to a Spot based on the Spot's id//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     const spotToAddImageTo = await Spot.findOne({
         where: {
@@ -286,7 +289,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     }
 })
 
-
+//Create a Spot//
 router.post('/', validateSpot, requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price, createdAt, updatedAt } = req.body;
     const ownerId = req.user.dataValues.id;
@@ -306,6 +309,7 @@ router.post('/', validateSpot, requireAuth, async (req, res) => {
     return res.json(newSpot)
 })
 
+//Edit a Spot//
 router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
     const spotToChange = await Spot.findOne({
         where: {
@@ -339,6 +343,7 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
     }
 })
 
+//Delete a Spot//
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spotToDelete = await Spot.findOne({
         where: {
@@ -357,6 +362,4 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         res.status(404).send({ message: "Spot couldn't be found" })
     }
 })
-
-
 module.exports = router;
