@@ -238,6 +238,26 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) =>
     }
 })
 
+router.get('/:spotId/reviews', async (req, res) => {
+    const Reviews = await Review.findAll({
+        where: { spotId: req.params.spotId },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+
+        ]
+    })
+    return res.json({ Reviews })
+
+
+})
+
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     const spotToAddImageTo = await Spot.findOne({
         where: {
