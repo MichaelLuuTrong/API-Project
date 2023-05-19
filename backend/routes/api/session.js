@@ -21,23 +21,6 @@ const validateLogin = [
     handleValidationErrors
 ];
 
-// router.get('/', requireAuth, async (req, res) => {
-//     console.log(req)
-//     const spotsBelongingToUser = await Spot.findAll({
-//         // where:,
-//         include: [
-//             {
-//                 model: SpotImage,
-//                 attributes: ['preview', 'url']
-//             },
-//             {
-//                 model: Review,
-//                 attributes: ['stars', 'userId']
-//             }
-//         ]
-//     })
-// })
-
 router.post(
     '/',
     validateLogin,
