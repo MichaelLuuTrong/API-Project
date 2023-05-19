@@ -50,15 +50,15 @@ const validateSpot = [
 
 const validateReview = [
     check('review')
-        .exists({ checkFalsy: true })
+        .exists({ checkFalsey: true })
+        .notEmpty()
         .withMessage('Review text is required'),
     check('stars')
-        .exists({ checkFalsy: true })
-        .withMessage('Star rating is required')
+        .exists({ checkFalsey: true })
         .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
-];
+]
 
 //Get all Spots owned by the Current User//
 router.get('/current', requireAuth, async (req, res) => {
