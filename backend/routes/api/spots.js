@@ -9,15 +9,19 @@ const { check } = require('express-validator');
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('Street address is required'),
     check('city')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('City is required'),
     check('state')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('State is required'),
     check('country')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('Country is required'),
     check('lat')
         .exists({ checkFalsy: true })
@@ -29,11 +33,13 @@ const validateSpot = [
         .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('Invalid name')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .withMessage('Description is required'),
     check('price')
         .exists({ checkFalsy: true })
@@ -44,15 +50,15 @@ const validateSpot = [
 
 const validateReview = [
     check('review')
-        .exists({ checkFalsy: true })
+        .exists({ checkFalsey: true })
+        .notEmpty()
         .withMessage('Review text is required'),
     check('stars')
-        .exists({ checkFalsy: true })
-        .withMessage('Star rating is required')
+        .exists({ checkFalsey: true })
         .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
-];
+]
 
 //Get all Spots owned by the Current User//
 router.get('/current', requireAuth, async (req, res) => {
