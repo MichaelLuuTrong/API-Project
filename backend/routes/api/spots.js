@@ -184,6 +184,35 @@ router.get('/', async (req, res) => {
     return res.json({ Spots })
 })
 
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+    const spotToAddReviewTo = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    });
+    if (spotToAddReviewTo) {
+        const newReview = await Review.create(
+            {
+                spotId: req.params.spotId,
+                userId: req.user.dataValues.id,
+                review: req.body.review,
+                stars: req.body.stars
+            })
+        let responseBody = {
+            id: newReview.id,
+            userId: newReview.userId,
+            review: newReview.review,
+            stars: newReview.stars,
+            createdAt: newReview.createdAt,
+            updatedAt: newReview.createdAt,
+        }
+        console.log(responseBody)
+        return res.json(responseBody)
+    } else {
+        res.status(404).send({ message: "Spot couldn't be found" })
+    }
+})
+
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     const spotToAddImageTo = await Spot.findOne({
         where: {
@@ -206,7 +235,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             return res.json(responseBody)
         } else {
             res.status(403).send({ message: "You are not the owner of that spot!" })
-
         }
     } else {
         res.status(404).send({ message: "Spot couldn't be found" })
