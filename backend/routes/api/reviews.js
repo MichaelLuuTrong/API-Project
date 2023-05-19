@@ -40,6 +40,26 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
     }
 })
 
+//Delete a review
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+    const reviewToDelete = await Review.findOne({
+        where: {
+            id: req.params.reviewId
+        }
+    });
+
+    if (reviewToDelete) {
+        if (req.user.dataValues.id === reviewToDelete.userId) {
+            await reviewToDelete.destroy()
+            return res.send({ message: "Successfully deleted" })
+        } else {
+            res.status(403).send({ message: "You are not the owner of that review!" })
+        }
+    } else {
+        res.status(404).send({ message: "Review couldn't be found" })
+    }
+})
+
 //Get all reviews of the current user
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
