@@ -26,15 +26,12 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
     const reviewToEdit = await Review.findOne({
         where: { id: req.params.reviewId }
     })
-
     if (!reviewToEdit) {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
-
     if (reviewToEdit.userId !== user.id) {
         return res.status(403).json({ message: "You cannot edit someone else's review" })
     }
-
     if (reviewToEdit.userId === user.id) {
         if (review) { reviewToEdit.review = review };
         if (review) { reviewToEdit.stars = stars };
@@ -42,10 +39,6 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
         return res.status(200).json(reviewToEdit)
     }
 })
-
-
-
-
 
 //Get all reviews of the current user
 router.get('/current', requireAuth, async (req, res) => {
