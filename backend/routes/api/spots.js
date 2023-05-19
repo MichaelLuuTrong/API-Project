@@ -184,6 +184,36 @@ router.get('/', async (req, res) => {
     return res.json({ Spots })
 })
 
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const spotToAddImageTo = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    });
+    if (spotToAddImageTo) {
+        if (req.user.dataValues.id === spotToAddImageTo.ownerId) {
+            const newSpotImage = await SpotImage.create(
+                {
+                    spotId: req.params.spotId,
+                    url: req.body.url,
+                    preview: req.body.preview
+                })
+            let responseBody = {
+                id: newSpotImage.id,
+                url: newSpotImage.url,
+                preview: newSpotImage.preview
+            }
+            return res.json(responseBody)
+        } else {
+            res.status(403).send({ message: "You are not the owner of that spot!" })
+
+        }
+    } else {
+        res.status(404).send({ message: "Spot couldn't be found" })
+    }
+})
+
+
 router.post('/', validateSpot, requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price, createdAt, updatedAt } = req.body;
     const ownerId = req.user.dataValues.id;
@@ -228,7 +258,7 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
             })
             return res.json(spotToChange)
         } else {
-            res.status(404).send({ message: "You are not the owner of that spot!" })
+            res.status(403).send({ message: "You are not the owner of that spot!" })
 
         }
     } else {
@@ -248,7 +278,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
             await spotToDelete.destroy()
             return res.send({ message: "Successfully deleted" })
         } else {
-            res.status(404).send({ message: "You are not the owner of that spot!" })
+            res.status(403).send({ message: "You are not the owner of that spot!" })
         }
     } else {
         res.status(404).send({ message: "Spot couldn't be found" })
