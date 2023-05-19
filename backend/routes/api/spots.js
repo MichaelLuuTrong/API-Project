@@ -321,11 +321,11 @@ router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
                 city: req.body.city,
                 state: req.body.state,
                 country: req.body.country,
-                lat: req.body.lat.parseFloat(),
-                lng: req.body.lng.parseFloat(),
+                lat: req.body.lat,
+                lng: req.body.lng,
                 name: req.body.name,
                 description: req.body.description,
-                price: req.body.price.parseInt(),
+                price: req.body.price,
                 createdAt: req.body.createdAt,
                 updatedAt: Date.now()
             })
