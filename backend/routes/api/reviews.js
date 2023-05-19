@@ -5,6 +5,7 @@ const { Op } = require('sequelize');
 const { Booking, Review, ReviewImage, Spot, SpotImage, User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
+const review = require('../../db/models/review');
 
 const validateReview = [
     check('review')
@@ -105,6 +106,40 @@ router.get('/current', requireAuth, async (req, res) => {
     res.json({ Reviews })
 })
 
+//Add an image to a review based on the review's id
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+    const { user } = req
+    const { url } = req.body
+    const reviewToAddImageTo = await Review.findOne({
+        where: { id: req.params.reviewId }
+    });
+
+    const imageCount = await ReviewImage.count({
+        where: { reviewId: req.params.reviewId }
+    });
+
+    if (!reviewToAddImageTo) {
+        return res.status(404).json({ message: "Review couldn't be found" })
+    }
+
+    if (user.id !== reviewToAddImageTo.userId) {
+        return res.status(403).json({ message: "You cannot add an image to someone else's review" })
+    }
+
+    if (imageCount >= 10) {
+        return res.status(403).json({ message: "Maximum number of images for this resource was reached" })
+    }
+
+    const newImageReview = await ReviewImage.create({
+        url,
+        reviewId: reviewToAddImageTo.id
+    })
+
+    return res.status(200).json({
+        id: newImageReview.id,
+        url: newImageReview.url
+    })
+})
 
 
 module.exports = router;
