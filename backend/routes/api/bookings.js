@@ -32,6 +32,8 @@ router.get('/current', requireAuth, async (req, res) => {
     if (userBookings) {
         (userBookings).forEach(userBooking => {
             userBooking = userBooking.toJSON();
+            //this sets previewImage to null if there are no spot images
+            userBooking.Spot.previewImage = null;
             (userBooking.Spot.SpotImages).forEach(image => {
                 if (image.preview === true) {
                     userBooking.Spot.previewImage = image.url;
