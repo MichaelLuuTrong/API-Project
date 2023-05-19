@@ -40,6 +40,19 @@ const validateSpot = [
         .withMessage('Price per day is required'),
     handleValidationErrors
 ];
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .withMessage('Star rating is required')
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 router.get('/current', requireAuth, async (req, res) => {
     const currentUserSpots = await Spot.findAll({
         where: { ownerId: req.user.dataValues.id },
@@ -184,12 +197,23 @@ router.get('/', async (req, res) => {
     return res.json({ Spots })
 })
 
-router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) => {
     const spotToAddReviewTo = await Spot.findOne({
         where: {
             id: req.params.spotId
         }
     });
+    //check if review already exists from this user//
+    const allReviewsForThisSpot = await Review.findAll({
+        where: {
+            userId: req.user.dataValues.id
+        }
+    })
+    for (let i = 0; i < allReviewsForThisSpot.length; i++) {
+        if (allReviewsForThisSpot[i].dataValues.spotId == req.params.spotId) {
+            return res.status(403).send({ message: "User already has a review for this spot" });
+        }
+    }
     if (spotToAddReviewTo) {
         const newReview = await Review.create(
             {
