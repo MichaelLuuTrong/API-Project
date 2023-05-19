@@ -214,6 +214,7 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) =>
             return res.status(403).send({ message: "User already has a review for this spot" });
         }
     }
+    //if review doesn't already exist, proceed
     if (spotToAddReviewTo) {
         const newReview = await Review.create(
             {
