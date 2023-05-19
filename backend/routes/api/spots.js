@@ -60,6 +60,42 @@ const validateReview = [
     handleValidationErrors
 ]
 
+const validateFilters = [
+    check('page')
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check('minLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Latitude is not valid.'),
+    check('maxLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Latitude is not valid.'),
+    check('minLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Longitude is not valid.'),
+    check('maxLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Longitude is not valid.'),
+    check('minPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+]
+
 //Get all Spots owned by the Current User//
 router.get('/current', requireAuth, async (req, res) => {
     const currentUserSpots = await Spot.findAll({
@@ -195,19 +231,45 @@ router.get('/:spotId', async (req, res) => {
 })
 
 //Get all Spots
-router.get('/', async (req, res) => {
+router.get('/', validateFilters, async (req, res) => {
+    // const allSpots = await Spot.findAll({
+    //     include: [
+    //         {
+    //             model: SpotImage,
+    //             attributes: ['preview', 'url']
+    //         },
+    //         {
+    //             model: Review,
+    //             attributes: ['stars', 'userId']
+    //         }
+    //     ]
+    // });
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    const pagination = {
+        where: {}
+    }
+
+    if (!page || page > 10) { page = 1 };
+    if (!size || size > 20) { size = 20 };
+
+    parsedPage = parseInt(page);
+    parsedSize = parseInt(size);
+
+    pagination.limit = parsedSize;
+    pagination.offet = (size * (page - 1));
+
+    if (minLat) pagination.where.lat = { [Op.gte]: minLat };
+    if (minLng) pagination.where.lng = { [Op.gte]: minLng };
+    if (maxLat) pagination.where.lat = { [Op.lte]: maxLat };
+    if (maxLng) pagination.where.lng = { [Op.lte]: maxLng };
+    if (minPrice) pagination.where.price = { [Op.gte]: minPrice };
+    if (maxPrice) pagination.where.price = { [Op.lte]: maxPrice };
+    if (minPrice && maxPrice) pagination.where.price = { [Op.between]: [minPrice, maxPrice] }
+
     const allSpots = await Spot.findAll({
-        include: [
-            {
-                model: SpotImage,
-                attributes: ['preview', 'url']
-            },
-            {
-                model: Review,
-                attributes: ['stars', 'userId']
-            }
-        ]
-    });
+        ...pagination
+    })
+
     let Spots = [];
     allSpots.forEach(element => {
         Spots.push(element.toJSON())
