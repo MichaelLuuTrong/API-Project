@@ -40,6 +40,57 @@ const validateSpot = [
         .withMessage('Price per day is required'),
     handleValidationErrors
 ];
+router.get('/current', requireAuth, async (req, res) => {
+    const currentUserSpots = await Spot.findAll({
+        where: { ownerId: req.user.dataValues.id },
+        include: [
+            {
+                model: SpotImage,
+                attributes: ['preview', 'url']
+            },
+            {
+                model: Review,
+                attributes: ['stars', 'userId']
+            }
+        ]
+    })
+    let Spots = [];
+    currentUserSpots.forEach(element => {
+        Spots.push(element.toJSON())
+    })
+
+    Spots.forEach(spot => {
+        let reviewCounter = 0
+        let starsCounter = 0
+        spot.Reviews.forEach(review => {
+            // console.log(review)
+            starsCounter += review.stars;
+            reviewCounter++
+        })
+        let averageReview = (starsCounter / reviewCounter)
+        // console.log(averageReview)
+        spot.avgRating = averageReview;
+        delete spot.Reviews
+    })
+
+    Spots.forEach(spot => {
+        spot.SpotImages.forEach(image => {
+            // console.log(element.preview);
+            if (image.preview === true) {
+                // console.log(element.url)
+                spot.previewImage = image.url;
+            } else spot.previewImage = null
+        })
+        delete spot.SpotImages
+    })
+    Spots.forEach(spot => {
+        if (!spot.previewImage) {
+            spot.previewImage = null
+        }
+    })
+
+    return res.json({ Spots })
+})
 
 router.get('/:spotId', async (req, res) => {
     const foundSpot = await Spot.findOne({
@@ -48,9 +99,7 @@ router.get('/:spotId', async (req, res) => {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview']
             },
-            {
-                model: User
-            },
+            { model: User },
             { model: Review }
         ],
         where: {
@@ -87,11 +136,6 @@ router.get('/:spotId', async (req, res) => {
         res.status(404).send({ message: "Spot couldn't be found" })
     }
 })
-
-
-
-
-
 
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
