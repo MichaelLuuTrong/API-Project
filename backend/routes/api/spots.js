@@ -317,6 +317,22 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         return res.status(404).send({ message: "Spot couldn't be found" })
     };
 
+    if (new Date(endDate) <= new Date(startDate)) {
+        return res.status(400).json({
+            message: "Bad Request",
+            errors: {
+                endDate: "endDate cannot be on or before startDate"
+            }
+        })
+    };
+
+    //check if user owns the spot
+    if (user.id === spotToBook.ownerId) {
+        return res.status(403).json({
+            message: "User cannot book a spot they own"
+        })
+    }
+
     const conflictingBookingStartDate = await Booking.findOne({
         where: {
             spotId: spotToBook.id,
@@ -352,21 +368,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     };
 
     //check if endDate on or before startDate
-    if (new Date(endDate) <= new Date(startDate)) {
-        return res.status(400).json({
-            message: "Bad Request",
-            errors: {
-                endDate: "endDate cannot be on or before startDate"
-            }
-        })
-    };
 
-    //check if user owns the spot
-    if (user.id === spotToBook.ownerId) {
-        return res.status(403).json({
-            message: "User cannot book a spot they own"
-        })
-    }
 
     //if all checks complete, create the booking
     const newBooking = await Booking.create({
