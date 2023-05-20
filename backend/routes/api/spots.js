@@ -436,6 +436,7 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) =>
         let responseBody = {
             id: newReview.id,
             userId: newReview.userId,
+            spotId: newReview.spotId,
             review: newReview.review,
             stars: newReview.stars,
             createdAt: newReview.createdAt,
