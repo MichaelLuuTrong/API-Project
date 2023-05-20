@@ -440,7 +440,12 @@ router.get('/:spotId/reviews', async (req, res) => {
 
         ]
     })
-    return res.json({ Reviews })
+    if (Reviews.length === 0) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found"
+        })
+    } else return res.json({ Reviews })
+
 })
 
 //Add an Image to a Spot based on the Spot's id//
@@ -450,9 +455,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             id: req.params.spotId
         }
     });
-
-    if (!spotToAddImageTo) { return res.status(404).send({ message: "Spot couldn't be found" }) }
-
     if (spotToAddImageTo) {
         if (req.user.dataValues.id === spotToAddImageTo.ownerId) {
             const newSpotImage = await SpotImage.create(
@@ -471,8 +473,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             res.status(403).send({ message: "You are not the owner of that spot!" })
         }
     } else {
-        return res.status(404).send({ message: "Spot couldn't be found" })
-
+        res.status(404).send({ message: "Spot couldn't be found" })
     }
 })
 
