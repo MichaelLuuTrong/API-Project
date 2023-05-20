@@ -440,7 +440,12 @@ router.get('/:spotId/reviews', async (req, res) => {
 
         ]
     })
-    return res.json({ Reviews })
+    if (Reviews.length === 0) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found"
+        })
+    } else return res.json({ Reviews })
+
 })
 
 //Add an Image to a Spot based on the Spot's id//
