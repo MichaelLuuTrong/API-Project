@@ -232,29 +232,12 @@ router.get('/:spotId', async (req, res) => {
 
 //Get all Spots ** FIX THIS
 router.get('/', validateFilters, async (req, res) => {
-    // const allSpots = await Spot.findAll({
-    //     include: [
-    //         {
-    //             model: SpotImage,
-    //             attributes: ['preview', 'url']
-    //         },
-    //         {
-    //             model: Review,
-    //             attributes: ['stars', 'userId']
-    //         }
-    //     ]
-    // });
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-    const pagination = {
-        where: {}
-    }
-
+    const pagination = { where: {} }
     if (!page || page > 10) { page = 1 };
     if (!size || size > 20) { size = 20 };
-
     parsedPage = parseInt(page);
     parsedSize = parseInt(size);
-
     pagination.limit = parsedSize;
     pagination.offet = (size * (page - 1));
 
@@ -271,35 +254,74 @@ router.get('/', validateFilters, async (req, res) => {
     })
 
     let Spots = [];
-    allSpots.forEach(element => {
-        Spots.push(element.toJSON())
-    })
 
-    Spots.forEach(spot => {
-        let reviewCounter = 0
-        let starsCounter = 0
-        spot.Reviews.forEach(review => {
-            // console.log(review)
-            starsCounter += review.stars;
-            reviewCounter++
-        })
-        let averageReview = (starsCounter / reviewCounter)
-        // console.log(averageReview)
-        spot.avgRating = averageReview;
-        delete spot.Reviews
-    })
+    for (let spot of allSpots) {
+        let JSONSpot = spot.toJSON();
+        const stars = await Review.sum('stars',
+            {
+                where:
+                {
+                    spotId: JSONSpot.id
+                }
+            });
+        const total = await Review.count({
+            where:
+            {
+                spotId: JSONSpot.id
+            }
+        });
+        let avg = (stars / total);
+        JSONSpot.avgRating = avg
 
-    Spots.forEach(spot => {
-        spot.SpotImages.forEach(image => {
-            // console.log(element.preview);
-            if (image.preview === true) {
-                // console.log(element.url)
-                spot.previewImage = image.url;
-            } else spot.previewImage = null
+        const previewImage = await SpotImage.findOne({
+            where:
+            {
+                spotId: JSONSpot.id
+            }
         })
-        delete spot.SpotImages
-    })
-    return res.json({ Spots })
+
+        if (previewImage) JSONSpot.previewImage = previewImage.url
+        Spots.push(JSONSpot)
+    }
+    return res.json({ Spots, page, size })
+
+    // const allSpots = await Spot.findAll({
+    //     include: [
+    //         {
+    //             model: SpotImage,
+    //             attributes: ['preview', 'url']
+    //         },
+    //         {
+    //             model: Review,
+    //             attributes: ['stars', 'userId']
+    //         }
+    //     ]
+    // });
+    // Spots.forEach(spot => {
+    //     let reviewCounter = 0
+    //     let starsCounter = 0
+    //     spot.Reviews.forEach(review => {
+    //         // console.log(review)
+    //         starsCounter += review.stars;
+    //         reviewCounter++
+    //     })
+    //     let averageReview = (starsCounter / reviewCounter)
+    //     // console.log(averageReview)
+    //     spot.avgRating = averageReview;
+    //     delete spot.Reviews
+    // })
+
+    // Spots.forEach(spot => {
+    //     spot.SpotImages.forEach(image => {
+    //         // console.log(element.preview);
+    //         if (image.preview === true) {
+    //             // console.log(element.url)
+    //             spot.previewImage = image.url;
+    //         } else spot.previewImage = null
+    //     })
+    //     delete spot.SpotImages
+    // })
+    // return res.json({ Spots })
 })
 
 //Create a Booking for a Spot based on the Spot's id
