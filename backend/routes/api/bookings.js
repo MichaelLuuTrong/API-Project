@@ -48,16 +48,16 @@ router.get('/current', requireAuth, async (req, res) => {
     res.json({ Bookings })
 });
 
-//Edit a booking
+//Edit a booking ** FIX THIS
 router.put('/:bookingId', requireAuth, async (req, res) => {
     let { user } = req;
     let { startDate, endDate } = req.body;
-    let booking = Booking.findOne({
+    let booking = await Booking.findOne({
         where: { id: req.params.bookingId }
     });
 
     if (!booking) {
-        return res.status(400).json({ message: "Booking couldn't be found" })
+        return res.status(404).json({ message: "Booking couldn't be found" })
     }
 
     if (new Date(endDate) <= new Date(startDate)) {
@@ -69,37 +69,68 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
+    if (booking.endDate < new Date() || booking.startDate < new Date()) {
+        return res.status(403).json({
+            message: "Past bookings can't be modified"
+        })
+    }
+
+    //get all bookings for the spot of the booking to be changed
+    //EXCLUDING the booking currently being edited!
     const allBookings = await Booking.findAll({
-        where: { spotId: booking.spotId }
+        where: {
+            [Op.and]: [
+                { spotId: booking.spotId },
+                { id: { [Op.ne]: req.params.bookingId } }
+            ]
+        }
     })
 
-    allBookings.forEach(booking => {
-        if (booking.startDate <= startDate || booking.endDate >= startDate) {
-            return res.json({
+    //converted to for loops so that they would stop checking spots if the condition is filled once.
+    for (let i = 0; i < allBookings.length; i++) {
+        if (Date.parse(startDate) >= Date.parse(allBookings[i].startDate) && Date.parse(startDate) <= Date.parse(allBookings[i].endDate)) {
+            return res.status(403).json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 errors: {
                     "startDate": "Start date conflicts with an existing booking",
                 }
             })
         }
-    })
+    }
 
-    allBookings.forEach(booking => {
-        if (booking.endDate <= endDate || booking.startDate <= endDate) {
-            return res.json({
+    for (let i = 0; i < allBookings.length; i++) {
+        if (Date.parse(endDate) <= Date.parse(allBookings[i].endDate) && Date.parse(endDate) >= Date.parse(allBookings[i].startDate)) {
+            return res.status(403).json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 errors: {
                     "endDate": "End date conflicts with an existing booking"
                 }
             })
         }
-    })
-
-    if (booking.endDate < new Date() || booking.startDate < new Date()) {
-        return res.status(403).json({
-            message: "Past bookings can't be modified"
-        })
     }
+
+    // allBookings.forEach(booking => {
+    //     if (Date.parse(startDate) >= Date.parse(booking.startDate) && Date.parse(startDate) <= Date.parse(booking.endDate)) {
+    //         return res.status(403).json({
+    //             message: "Sorry, this spot is already booked for the specified dates",
+    //             errors: {
+    //                 "startDate": "Start date conflicts with an existing booking",
+    //             }
+    //         })
+    //     }
+    // })
+    // allBookings.forEach(booking => {
+    //     if (Date.parse(endDate) <= Date.parse(booking.endDate) && Date.parse(endDate) >= Date.parse(booking.startDate)) {
+    //         return res.status(403).json({
+    //             message: "Sorry, this spot is already booked for the specified dates",
+    //             errors: {
+    //                 "endDate": "End date conflicts with an existing booking"
+    //             }
+    //         })
+    //     }
+    // })
+
+    //if all other checks pass, make sure user is changing their own booking
 
     if (user.id === booking.userId) {
         if (startDate) { booking.startDate = new Date(startDate) };
@@ -109,7 +140,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     } else {
         res.status(403).json({ message: "You cannot change someone else's booking" })
     }
-
 })
 
 //Delete a booking
