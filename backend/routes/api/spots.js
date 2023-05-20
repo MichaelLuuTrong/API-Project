@@ -230,7 +230,7 @@ router.get('/:spotId', async (req, res) => {
     }
 })
 
-//Get all Spots
+//Get all Spots ** FIX THIS
 router.get('/', validateFilters, async (req, res) => {
     // const allSpots = await Spot.findAll({
     //     include: [
