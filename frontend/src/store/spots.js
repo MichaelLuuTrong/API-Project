@@ -13,12 +13,13 @@ export const loadSpots = (spots) => ({
     spots,
 })
 
-export const loadASpot = (spot) => ({
+export const loadASpot = (singleSpot) => ({
     type: LOAD_A_SPOT,
-    spot
+    singleSpot
 })
 
 //Thunk Action Creators
+//all spots action creator
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch("/api/spots")
 
@@ -28,6 +29,7 @@ export const fetchSpots = () => async (dispatch) => {
     }
 };
 
+//single spot action creator
 export const fetchASpot = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`)
 
