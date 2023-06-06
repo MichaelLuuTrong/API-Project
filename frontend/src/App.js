@@ -17,11 +17,10 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Switch></Switch>}
-      <Switch>
+      {isLoaded && <Switch>
         <Route exact path="/" component={SpotsIndex} />
-        <Route path="/spots/:spotId" component={SpotPage} />
-      </Switch>
+        <Route exact path="/spots/:spotId" component={SpotPage} />
+      </Switch>}
     </>
   );
 }

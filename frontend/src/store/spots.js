@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf"
 
 //Action Type Constants
 export const LOAD_SPOTS = "spots/LOAD_SPOTS"
+export const LOAD_A_SPOT = "spots/LOAD_A_SPOT"
 export const CREATE_SPOT = "spots/CREATE_SPOT"
 export const DELETE_SPOT = "spots/DELETE_SPOT"
 export const UPDATE_SPOT = "spots/UPDATE_SPOT"
@@ -10,6 +11,11 @@ export const UPDATE_SPOT = "spots/UPDATE_SPOT"
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
     spots,
+})
+
+export const loadASpot = (spot) => ({
+    type: LOAD_A_SPOT,
+    spot
 })
 
 //Thunk Action Creators
@@ -22,22 +28,31 @@ export const fetchSpots = () => async (dispatch) => {
     }
 };
 
+export const fetchASpot = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`)
+
+    if (res.ok) {
+        const spotDetails = await res.json();
+        dispatch(loadASpot(spotDetails))
+    }
+}
+
 //Spots Reducer
 let initialState = { allSpots: {}, singleSpot: {} }
-
 const spotsReducer = (state = initialState, action) => {
-    // console.log("state in spot reducer:", state)
     switch (action.type) {
         case LOAD_SPOTS:
             const spotsState = { allSpots: {} };
-            // console.log("action.spots:", action.spots.Spots);
             action.spots.Spots.forEach((spot) => {
                 spotsState.allSpots[spot.id] = spot
             });
             return spotsState
+        case LOAD_A_SPOT:
+            return { ...state, singleSpot: action.singleSpot }
         default:
             return state
     }
-};
+}
+
 
 export default spotsReducer;
