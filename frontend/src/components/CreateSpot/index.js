@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { createSpot } from '../../store/spots'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import './CreateSpot.css'
-
 
 const CreateSpot = () => {
     //
@@ -11,7 +13,7 @@ const CreateSpot = () => {
     //
     const [description, setDescription] = useState('')
     //
-    const [title, setTitle] = useState('')
+    const [name, setName] = useState('')
     //
     const [price, setPrice] = useState('')
     //
@@ -21,22 +23,79 @@ const CreateSpot = () => {
     const [image3, setImage3] = useState('')
     const [image4, setImage4] = useState('')
     //
+    const [submitted, setSubmitted] = useState(false)
+    const [errors, setErrors] = useState({})
+    const [responseErrors, setResponseErrors] = useState({})
+    //
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        const errorArray = [];
+        if (!country.length) errorArray.country = 'Country is Required'
+        if (!address.length) errorArray.address = 'Address is required'
+        if (!city.length) errorArray.city = 'City is required'
+        if (!state.length) errorArray.state = 'State is required'
+        if (description.length < 30) errorArray.description = 'Description needs a minimum of 30 characters'
+        if (!name.length) errorArray.name = 'Name is required'
+        if (!price || price <= 0) errorArray.price = 'Price is required'
+        if (!previewImage.length) errorArray.previewImage = 'Preview image is required'
+        if (previewImage && !((previewImage.endsWith('.png') || (previewImage.endsWith('.jpg') || (previewImage.endsWith('.jpeg')))))) errorArray.previewImageValidation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image1 && !((image1.endsWith('.png') || (image1.endsWith('.jpg') || (image1.endsWith('.jpeg')))))) errorArray.image1Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image2 && !((image2.endsWith('.png') || (image2.endsWith('.jpg') || (image2.endsWith('.jpeg')))))) errorArray.image2Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image3 && !((image3.endsWith('.png') || (image3.endsWith('.jpg') || (image3.endsWith('.jpeg')))))) errorArray.image3Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image4 && !((image4.endsWith('.png') || (image4.endsWith('.jpg') || (image4.endsWith('.jpeg')))))) errorArray.image4Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        setErrors(errorArray);
+    }, [country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
 
     const formSubmit = async (e) => {
         e.preventDefault()
+        setSubmitted(true);
+        setResponseErrors({});
+        //latitude and longitude information are not implemented in this version of the form.
+        //they are hard-coded to bypass SQL validation
+        const lat = 45.00;
+        const lng = 45.00;
+
+        const nonImageResponses = {
+            country,
+            address,
+            city,
+            state,
+            description,
+            name,
+            price,
+            lat,
+            lng
+        };
+        const imageResponses = [];
+        imageResponses.push(previewImage);
+        if (image1) { imageResponses.push(image1) }
+        if (image2) { imageResponses.push(image2) }
+        if (image3) { imageResponses.push(image3) }
+        if (image4) { imageResponses.push(image4) }
+
+        if (!Object.values(errors).length) {
+            let createdSpot = dispatch(createSpot(nonImageResponses, imageResponses))
+            if (!createdSpot.errors) {
+                history.push(`/spots/${createdSpot.id}`)
+            }
+            else {
+                setResponseErrors(createdSpot.errors)//<---------------------------
+            }
+        }
     }
-
-
     return (
         <div onSubmit={formSubmit} className='formDiv'>
             <form className='form'>
                 <h1>Create a New Spot</h1>
+                {submitted && (Object.values(responseErrors).length) ? <p>{Object.values(responseErrors)}</p> : null}
                 <div className='formSubmissionDiv'>
                     <h2>Where's your place located?</h2>
                     <p>Guests will only get your exact address once they booked a reservation.</p>
                     <div>
                         <label>Country</label>
-                        {/* error handler here */}
+                        {submitted ? <p className='validationerror'>{errors.country}</p> : null}
                     </div>
                     <input
                         type="text"
@@ -49,7 +108,7 @@ const CreateSpot = () => {
                 <div>
                     <div>
                         <label>Street Address</label>
-                        {/* error handler here */}
+                        {submitted ? <p className='validationerror'>{errors.address}</p> : null}
                     </div>
                     <input
                         type="text"
@@ -62,7 +121,7 @@ const CreateSpot = () => {
                 <div>
                     <div>
                         <label>City</label>
-                        {/* error handler here */}
+                        {submitted ? <p className='validationerror'>{errors.city}</p> : null}
                     </div>
                     <input
                         type="text"
@@ -75,7 +134,7 @@ const CreateSpot = () => {
                 <div>
                     <div>
                         <label>State</label>
-                        {/* error handler here */}
+                        {submitted ? <p className='validationerror'>{errors.state}</p> : null}
                     </div>
                     <input
                         type="text"
@@ -97,32 +156,35 @@ const CreateSpot = () => {
                         cols="50"
                     >
                     </textarea>
-                    {/* error handler here */}
+                    {submitted ? <p className='validationerror'>{errors.description}</p> : null}
                 </div>
                 <div className='formSubmissionDiv'>
                     <h2>Create a title for your spot</h2>
                     <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
                     <input
                         type="text"
-                        name="title"
+                        name="name"
                         placeholder="Name of your spot"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
+                    {submitted ? <p className='validationerror'>{errors.name}</p> : null}
                 </div>
                 <div className='formSubmissionDiv'>
                     <h2>Set a base price for your spot</h2>
                     <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                     <p>$</p>
                     <input
-                        type="text"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
                         name="price"
                         placeholder="Price per night (USD)"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
+                    {submitted ? <p className='validationerror'>{errors.price}</p> : null}
                 </div>
-                {/* insert error handling here */}
                 <div>
                     <h2>Liven up your spot with photos</h2>
                     <p>Submit a link to at least one photo to publish your spot.</p>
@@ -134,16 +196,17 @@ const CreateSpot = () => {
                             value={previewImage}
                             onChange={(e) => setPreviewImage(e.target.value)}
                         ></input>
-                        {/* insert error handling here */}
+                        {submitted ? <p className='validationerror'>{errors.previewImage}</p> : null}
+                        {submitted ? <p className='validationerror'>{errors.previewImageValidation}</p> : null}
                         <input
+
                             type='text'
                             name='image1'
                             placeholder='Image URL'
                             value={image1}
                             onChange={(e) => setImage1(e.target.value)}
                         ></input>
-                        {/* insert error handling here */}
-
+                        {submitted ? <p className='validationerror'>{errors.image1Validation}</p> : null}
                         <input
                             type='text'
                             name='image2'
@@ -151,7 +214,7 @@ const CreateSpot = () => {
                             value={image2}
                             onChange={(e) => setImage2(e.target.value)}
                         ></input>
-                        {/* insert error handling here */}
+                        {submitted ? <p className='validationerror'>{errors.image2Validation}</p> : null}
 
                         <input
                             type='text'
@@ -160,7 +223,7 @@ const CreateSpot = () => {
                             value={image3}
                             onChange={(e) => setImage3(e.target.value)}
                         ></input>
-                        {/* insert error handling here */}
+                        {submitted ? <p className='validationerror'>{errors.image3Validation}</p> : null}
 
                         <input
                             type='text'
@@ -169,7 +232,7 @@ const CreateSpot = () => {
                             value={image4}
                             onChange={(e) => setImage4(e.target.value)}
                         ></input>
-                        {/* insert error handling here */}
+                        {submitted ? <p className='validationerror'>{errors.image4Validation}</p> : null}
 
                     </div>
                 </div>

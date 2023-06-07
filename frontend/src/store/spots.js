@@ -18,6 +18,11 @@ export const loadASpot = (singleSpot) => ({
     singleSpot
 })
 
+export const createASpot = (singleSpot) => ({
+    type: CREATE_SPOT,
+    singleSpot
+})
+
 //Thunk Action Creators
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch("/api/spots")
@@ -37,6 +42,33 @@ export const fetchASpot = (spotId) => async (dispatch) => {
     }
 }
 
+export const createSpot = (nonImageResponses, imageResponses) => async (dispatch) => {
+    //POST spots
+    const responseWithoutImages = await csrfFetch('/api/spots',
+        {
+            method: 'POST',
+            header: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nonImageResponses)
+        })
+    const spotWithoutImages = await responseWithoutImages.json();
+
+    //POST /spots/:spotId/images
+    for (let imageurl of imageResponses) {
+        let imageObject = {
+            url: imageurl,
+            preview: true
+        }
+        await csrfFetch(`api/spots/${spotWithoutImages.id}/images`, {
+            method: 'POST',
+            header: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(imageObject)
+        })
+        const responseWithImages = await csrfFetch(`api/spots/${spotWithoutImages.id}`);
+        dispatch(createASpot(responseWithImages.json()))
+        return responseWithImages.json
+    }
+}
+
 //Spots Reducer
 let initialState = { allSpots: {}, singleSpot: {} }
 const spotsReducer = (state = initialState, action) => {
@@ -49,6 +81,8 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState
         case LOAD_A_SPOT:
             return { ...state, singleSpot: action.singleSpot }
+        case CREATE_SPOT:
+            return { ...state, singleSpot: action.singleSpot, allSpots: action.singleSpot }
         default:
             return state
     }
