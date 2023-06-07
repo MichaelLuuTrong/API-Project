@@ -12,9 +12,15 @@ const SpotPage = () => {
         dispatch(fetchASpot(spotId));
     }, [dispatch, spotId]);
 
+    const clickReserve = (e) => {
+        e.preventDefault();
+        window.alert('Feature Coming Soon')
+    }
+
     const placeholderImage = "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"
 
     if (!spotObj) return null
+    if (!spotObj.SpotImages) return null
 
     return (
         <div className='singleSpotPage'>
@@ -38,18 +44,26 @@ const SpotPage = () => {
                     <h2>Hosted by {spotObj.Owner.firstName} {spotObj.Owner.lastName}</h2>
                     <p>{spotObj.description}</p>
                 </div>
-                <div className='reserveDiv'>
+                <div className='reservationDiv'>
                     <div>
                         <p>${spotObj.price} night</p>
                     </div>
+                    {!spotObj.avgStarRating ?
+                        <div className='newSpot'>
+                            <i className="fa-solid fa-star"></i>
+                            <h3>New</h3>
+                        </div>
+                        :
+                        < div className='reviewedSpot'>
+                            <h3><i className="fa-solid fa-star"></i> {spotObj.avgStarRating} • INSERT REVIEW NUM HERE</h3>
+                        </div>}
                     <div>
-
-
+                        <button onClick={clickReserve} className='reservationButton'>Reserve</button>
                     </div>
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 
