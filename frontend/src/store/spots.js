@@ -22,23 +22,23 @@ export const createASpot = (singleSpot) => (
     {
         type: CREATE_SPOT,
         singleSpot,
-        allSpots: {
-            id: singleSpot.id,
-            ownerId: singleSpot.ownerId,
-            address: singleSpot.address,
-            city: singleSpot.city,
-            state: singleSpot.state,
-            country: singleSpot.country,
-            lat: singleSpot.lat,
-            lng: singleSpot.lng,
-            name: singleSpot.name,
-            description: singleSpot.description,
-            price: singleSpot.price,
-            createdAt: singleSpot.createdAt,
-            updatedAt: singleSpot.updatedAt,
-            avgRating: singleSpot.avgStarRating,
-            previewImage: singleSpot.SpotImages[0].url
-        }
+        // allSpots: {
+        //     id: singleSpot.id,
+        //     ownerId: singleSpot.ownerId,
+        //     address: singleSpot.address,
+        //     city: singleSpot.city,
+        //     state: singleSpot.state,
+        //     country: singleSpot.country,
+        //     lat: singleSpot.lat,
+        //     lng: singleSpot.lng,
+        //     name: singleSpot.name,
+        //     description: singleSpot.description,
+        //     price: singleSpot.price,
+        //     createdAt: singleSpot.createdAt,
+        //     updatedAt: singleSpot.updatedAt,
+        //     avgRating: singleSpot.avgStarRating,
+        //     previewImage: singleSpot.SpotImages[0].url
+        // }
     })
 
 //Thunk Action Creators
@@ -109,7 +109,7 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD_A_SPOT:
             return { ...state, singleSpot: action.singleSpot }
         case CREATE_SPOT:
-            return { ...state, singleSpot: action.singleSpot, allSpots: action.allSpots }
+            return { ...state, singleSpot: action.singleSpot, allSpots: {} }
         default:
             return state
     }
