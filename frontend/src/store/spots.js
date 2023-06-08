@@ -10,7 +10,7 @@ export const UPDATE_SPOT = "spots/UPDATE_SPOT"
 //Action Creators
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
-    spots,
+    spots
 })
 
 export const loadASpot = (singleSpot) => ({
@@ -18,10 +18,28 @@ export const loadASpot = (singleSpot) => ({
     singleSpot
 })
 
-export const createASpot = (singleSpot) => ({
-    type: CREATE_SPOT,
-    singleSpot
-})
+export const createASpot = (singleSpot) => (
+    {
+        type: CREATE_SPOT,
+        singleSpot,
+        allSpots: {
+            id: singleSpot.id,
+            ownerId: singleSpot.ownerId,
+            address: singleSpot.address,
+            city: singleSpot.city,
+            state: singleSpot.state,
+            country: singleSpot.country,
+            lat: singleSpot.lat,
+            lng: singleSpot.lng,
+            name: singleSpot.name,
+            description: singleSpot.description,
+            price: singleSpot.price,
+            createdAt: singleSpot.createdAt,
+            updatedAt: singleSpot.updatedAt,
+            avgRating: singleSpot.avgStarRating,
+            previewImage: singleSpot.SpotImages[0].url
+        }
+    })
 
 //Thunk Action Creators
 export const fetchSpots = () => async (dispatch) => {
@@ -44,33 +62,42 @@ export const fetchASpot = (spotId) => async (dispatch) => {
 
 export const createSpot = (nonImageResponses, imageResponses) => async (dispatch) => {
     //POST spots
-    const responseWithoutImages = await csrfFetch('/api/spots',
-        {
-            method: 'POST',
-            header: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nonImageResponses)
-        })
-    const spotWithoutImages = await responseWithoutImages.json();
-
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        header: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nonImageResponses)
+    })
+    const spot = await response.json();
     //POST /spots/:spotId/images
-    for (let imageurl of imageResponses) {
+    let imageObject = {
+        url: imageResponses[0],
+        preview: true
+    }
+    await csrfFetch(`/api/spots/${spot.id}/images`, {
+        method: 'POST',
+        header: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(imageObject)
+    })
+    for (let i = 1; i < imageResponses.length; i++) {
         let imageObject = {
-            url: imageurl,
-            preview: true
+            url: imageResponses[i],
+            preview: false
         }
-        await csrfFetch(`api/spots/${spotWithoutImages.id}/images`, {
+        await csrfFetch(`/api/spots/${spot.id}/images`, {
             method: 'POST',
             header: { 'Content-Type': 'application/json' },
             body: JSON.stringify(imageObject)
         })
-        const responseWithImages = await csrfFetch(`api/spots/${spotWithoutImages.id}`);
-        dispatch(createASpot(responseWithImages.json()))
-        return responseWithImages.json
     }
+    const responseWithImages = await csrfFetch(`/api/spots/${spot.id}`);
+    const createdSpot = await responseWithImages.json()
+    dispatch(createASpot(createdSpot))
+    return createdSpot
 }
 
 //Spots Reducer
 let initialState = { allSpots: {}, singleSpot: {} }
+
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
@@ -82,7 +109,7 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD_A_SPOT:
             return { ...state, singleSpot: action.singleSpot }
         case CREATE_SPOT:
-            return { ...state, singleSpot: action.singleSpot, allSpots: action.singleSpot }
+            return { ...state, singleSpot: action.singleSpot, allSpots: action.allSpots }
         default:
             return state
     }

@@ -41,10 +41,10 @@ const CreateSpot = () => {
         if (!price || price <= 0) errorArray.price = 'Price is required'
         if (!previewImage.length) errorArray.previewImage = 'Preview image is required'
         if (previewImage && !((previewImage.endsWith('.png') || (previewImage.endsWith('.jpg') || (previewImage.endsWith('.jpeg')))))) errorArray.previewImageValidation = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (image1 && !((image1.endsWith('.png') || (image1.endsWith('.jpg') || (image1.endsWith('.jpeg')))))) errorArray.image1Validation = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (image2 && !((image2.endsWith('.png') || (image2.endsWith('.jpg') || (image2.endsWith('.jpeg')))))) errorArray.image2Validation = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (image3 && !((image3.endsWith('.png') || (image3.endsWith('.jpg') || (image3.endsWith('.jpeg')))))) errorArray.image3Validation = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (image4 && !((image4.endsWith('.png') || (image4.endsWith('.jpg') || (image4.endsWith('.jpeg')))))) errorArray.image4Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image1 && !(image1.endsWith('.png') || (image1.endsWith('.jpg') || (image1.endsWith('.jpeg'))))) errorArray.image1Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image2 && !(image2.endsWith('.png') || (image2.endsWith('.jpg') || (image2.endsWith('.jpeg'))))) errorArray.image2Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image3 && !(image3.endsWith('.png') || (image3.endsWith('.jpg') || (image3.endsWith('.jpeg'))))) errorArray.image3Validation = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (image4 && !(image4.endsWith('.png') || (image4.endsWith('.jpg') || (image4.endsWith('.jpeg'))))) errorArray.image4Validation = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(errorArray);
     }, [country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
 
@@ -70,18 +70,18 @@ const CreateSpot = () => {
         };
         const imageResponses = [];
         imageResponses.push(previewImage);
-        if (image1) { imageResponses.push(image1) }
-        if (image2) { imageResponses.push(image2) }
-        if (image3) { imageResponses.push(image3) }
-        if (image4) { imageResponses.push(image4) }
+        if (!(image1 === '')) { imageResponses.push(image1) }
+        if (!(image2 === '')) { imageResponses.push(image2) }
+        if (!(image3 === '')) { imageResponses.push(image3) }
+        if (!(image4 === '')) { imageResponses.push(image4) }
 
         if (!Object.values(errors).length) {
-            let createdSpot = dispatch(createSpot(nonImageResponses, imageResponses))
+            let createdSpot = await dispatch(createSpot(nonImageResponses, imageResponses))
             if (!createdSpot.errors) {
                 history.push(`/spots/${createdSpot.id}`)
             }
             else {
-                setResponseErrors(createdSpot.errors)//<---------------------------
+                setResponseErrors(createdSpot.errors)
             }
         }
     }

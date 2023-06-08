@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 
 const SpotsIndex = () => {
     const spotsObj = useSelector(function (state) {
-        // console.log("state in SpotsIndex:", state)
         return state.spots.allSpots
     })
     const spotsArray = Object.values(spotsObj)
@@ -21,11 +20,9 @@ const SpotsIndex = () => {
         <div>
             {
                 spotsArray.map((spot) => (
-                    <div className='spotsDiv'>
-                        <div className='indivSpotDiv' key={`spot/${spot.id}`}>
-                            <div className='previewImageDiv'>
-                                <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
-                            </div>
+                    <div className='indivSpotDiv' key={`spot/${spot.id}`}>
+                        <div className='previewImageDiv'>
+                            <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                         </div>
                         <div className='spotInfo'>
                             <div className='locationInfo'>
