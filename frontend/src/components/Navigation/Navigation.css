@@ -1,3 +1,41 @@
 .hidden {
     display: none;
 }
+
+.navBar {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: left middle right;
+    width: 100%
+}
+
+.navBarLeft {
+    display: flex;
+    grid-area: left
+}
+
+.navBarRight {
+    display: flex;
+    grid-area: right
+}
+
+.airbabIcon {
+    position: relative;
+    top: 5px;
+    height: 44px;
+    width: 44px
+}
+
+.airbabName {
+    position: relative;
+    left: 5px;
+    height: 50px
+}
+
+.changeCursor {
+    cursor: pointer;
+}
+
+.divWithBottomLine {
+    border-bottom: 1px black solid;
+}

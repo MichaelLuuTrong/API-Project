@@ -4,10 +4,13 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useHistory } from 'react-router-dom'
+import "./Navigation.css";
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const history = useHistory()
     const ulRef = useRef();
 
     const openMenu = () => {
@@ -41,21 +44,28 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fas fa-user-circle" />
+            <button onClick={openMenu} className="profileMenuButton changeCursor">
+                <div className="profileMenu">
+                    <i className="fa-solid fa-bars" />
+                    <i className="fas fa-user-circle" />
+                </div>
             </button>
-            <ul className={ulClassName} ref={ulRef}>
+            <div className={ulClassName} ref={ulRef}>
                 {user ? (
-                    <>
-                        <li>{user.username}</li>
-                        <li>{user.firstName} {user.lastName}</li>
-                        <li>{user.email}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
-                        </li>
-                    </>
+                    <div className='profileMenu'>
+                        <div className='divWithBottomLine'>
+                            <p>Hello, {user.username}</p>
+                            <p>{user.email}</p>
+                        </div>
+                        <div className='divWithBottomLine' >
+                            <button onClick={() => history.push(`/spots/current`)}> Manage Spots</button>
+                        </div>
+                        <div className='divWithBottomLine'>
+                            <button onClick={logout} className="changeCursor">Log Out</button>
+                        </div>
+                    </div>
                 ) : (
-                    <>
+                    <div className='login+signup'>
                         <OpenModalMenuItem
                             itemText="Log In"
                             onItemClick={closeMenu}
@@ -66,9 +76,9 @@ function ProfileButton({ user }) {
                             onItemClick={closeMenu}
                             modalComponent={<SignupFormModal />}
                         />
-                    </>
+                    </div>
                 )}
-            </ul>
+            </div >
         </>
     );
 }
