@@ -41,6 +41,11 @@ export const createASpot = (singleSpot) => (
         // }
     })
 
+export const updateASpot = (singleSpot) => ({
+    type: UPDATE_SPOT,
+    singleSpot
+})
+
 //Thunk Action Creators
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch("/api/spots")
@@ -95,19 +100,38 @@ export const createSpot = (nonImageResponses, imageResponses) => async (dispatch
     return createdSpot
 }
 
+export const updateSpotThunk = (spotId, nonImageResponses) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nonImageResponses)
+    });
+
+    if (res.ok) {
+        const validatedUpdatedSpot = await res.json();
+        dispatch(updateASpot(validatedUpdatedSpot));
+        return validatedUpdatedSpot;
+    } else {
+        const errors = await res.json();
+        return errors
+    }
+}
+
 //Spots Reducer
 let initialState = { allSpots: {}, singleSpot: {} }
 
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
-            const spotsState = { allSpots: {} };
+            const spotsState = { allSpots: {}, singleSpot: {} };
             action.spots.Spots.forEach((spot) => {
                 spotsState.allSpots[spot.id] = spot
             });
             return spotsState
         case LOAD_A_SPOT:
-            return { ...state, singleSpot: action.singleSpot }
+            return { ...state, singleSpot: action.singleSpot, allSpots: {} }
         case CREATE_SPOT:
             return { ...state, singleSpot: action.singleSpot, allSpots: {} }
         default:

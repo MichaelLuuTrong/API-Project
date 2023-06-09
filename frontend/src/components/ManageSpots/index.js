@@ -17,6 +17,10 @@ const ManageSpots = () => {
         dispatch(fetchSpots())
     }, [dispatch])
 
+    if (!user) {
+        return (history.push('/'))
+    }
+
     allSpots.forEach(spot => {
         if (spot.ownerId === user.id) userSpots.push(spot)
     });
@@ -50,6 +54,7 @@ const ManageSpots = () => {
                                     <p>${spot.price} night</p>
                                 </div>
                             </div>
+                            <button className="updateButton changeCursor" onClick={() => history.push(`/spots/${spot.id}/edit`)}>Update</button>
                         </div>
                     ))
                 }
