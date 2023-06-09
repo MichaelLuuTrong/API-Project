@@ -46,6 +46,11 @@ export const updateASpot = (singleSpot) => ({
     singleSpot
 })
 
+export const deleteSpotAction = (spotId) => ({
+    type: DELETE_SPOT,
+    spotId
+})
+
 //Thunk Action Creators
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch("/api/spots")
@@ -119,6 +124,18 @@ export const updateSpotThunk = (spotId, nonImageResponses) => async (dispatch) =
     }
 }
 
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "DELETE"
+    });
+    if (res.ok) {
+        dispatch(deleteSpotAction(spotId));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 //Spots Reducer
 let initialState = { allSpots: {}, singleSpot: {} }
 
@@ -134,6 +151,10 @@ const spotsReducer = (state = initialState, action) => {
             return { ...state, singleSpot: action.singleSpot, allSpots: {} }
         case CREATE_SPOT:
             return { ...state, singleSpot: action.singleSpot, allSpots: {} }
+        case DELETE_SPOT:
+            const deleteState = { ...state };
+            delete deleteState.allSpots[action.spotId]
+            return deleteState;
         default:
             return state
     }

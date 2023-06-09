@@ -2,20 +2,26 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spots"
 import { NavLink } from "react-router-dom";
-
 import { useHistory } from "react-router"
+import DeleteModal from "../DeleteSpot"
+import OpenModalButton from "../OpenModalButton"
 
 
 const ManageSpots = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const user = useSelector(state => state.session.user)
     const allSpots = useSelector(state => Object.values(state.spots.allSpots))
+    const user = useSelector(state => state.session.user)
 
     let userSpots = [];
+
     useEffect(() => {
         dispatch(fetchSpots())
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(fetchSpots())
+    }, [])
 
     if (!user) {
         return (history.push('/'))
@@ -55,6 +61,11 @@ const ManageSpots = () => {
                                 </div>
                             </div>
                             <button className="updateButton changeCursor" onClick={() => history.push(`/spots/${spot.id}/edit`)}>Update</button>
+                            <OpenModalButton
+                                cName="deleteButton changeCursor"
+                                modalComponent={<DeleteModal spotId={spot.id} />}
+                                buttonText="Delete"
+                            />
                         </div>
                     ))
                 }
