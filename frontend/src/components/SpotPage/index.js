@@ -2,14 +2,27 @@ import { useParams } from "react-router-dom";
 import { fetchASpot } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
+import ReviewsForSpot from "../ReviewsForSpot";
+import { getReviewsThunk } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton"
+import ReviewFormModal from "../ReviewFormModal"
 
 const SpotPage = () => {
     const { spotId } = useParams()
     const spotObj = useSelector((state) => state.spots.singleSpot)
+    const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
+    const reviews = useSelector(state => Object.values(state.reviews));
+    let usersWithReview = [];
+
+    reviews.forEach(review => {
+        usersWithReview.push(review.User.id)
+    })
+
 
     useEffect(() => {
         dispatch(fetchASpot(spotId));
+        dispatch(getReviewsThunk(spotId))
     }, [dispatch, spotId]);
 
     const clickReserve = (e) => {
@@ -55,14 +68,51 @@ const SpotPage = () => {
                         </div>
                         :
                         < div className='reviewedSpot'>
-                            <h3><i className="fa-solid fa-star"></i> {spotObj.avgStarRating} • INSERT REVIEW NUM HERE</h3>
+                            <h3><i className="fa-solid fa-star"></i>
+                                <div>{spotObj.avgStarRating}</div>
+                                <div>•</div>
+                                {spotObj.numReviews === 1 &&
+                                    <div className='oneReview'>{spotObj.numReviews} review</div>
+                                }
+                                {spotObj.numReviews > 1 &&
+                                    <div className='multipleReviews'>{spotObj.numReviews} reviews</div>
+                                }
+                            </h3>
                         </div>}
                     <div>
                         <button onClick={clickReserve} className='reservationButton'>Reserve</button>
                     </div>
+                    <div className='reviewsDiv'>
+                        <div className='ratingNumber'>
+                            <i className="fa-solid fa-star"></i>
+                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : spotObj.avgStarRating)} </h4>
+                            <h4>•</h4>
+                            <h4>
+                                {spotObj.numReviews === 1 &&
+                                    <div className='oneReview'>{spotObj.numReviews} review</div>
+                                }
+                                {spotObj.numReviews > 1 &&
+                                    <div className='multipleReviews'>{spotObj.numReviews} reviews</div>
+                                }
+                            </h4>
+                            {user && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id)) &&
+                                <div className="review-post-div">
+                                    <OpenModalButton
+                                        cName="review-post-button changeCursor"
+                                        modalComponent={<ReviewFormModal spotId={spotId} />}
+                                        buttonText="Post Your Review"
+                                    // add more stuff here if needed
+                                    />
+                                </div>
+                            }
+                            {user && (!spotObj.numReviews && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id))) && <p>Be the first to post a review!</p>}
+                        </div>
+                        <div className='eachReview'>
+                            <ReviewsForSpot spotId={spotId} />
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div >
     )
 }

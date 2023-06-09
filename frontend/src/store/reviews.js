@@ -29,7 +29,8 @@ export const getReviewsThunk = (spotId) => async (dispatch) => {
         await dispatch(getReviewsAction(reviews));
         return reviews;
 
-    } else {
+    }
+    else {
         const errors = await res.json();
         return errors;
     }
@@ -72,7 +73,7 @@ const reviewsReducer = (state = {}, action) => {
         case GET_REVIEWS:
             const reviews = {};
             action.reviews.Reviews.forEach(review => reviews[review.id] = review);
-            return reviews
+            return reviews;
         case CREATE_REVIEW:
             const reviewStateForCreate = { ...state };
             reviewStateForCreate[action.newReview.id] = action.newReview;
