@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -8,7 +8,6 @@ import airbabname from '../../img/airbabname.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-    const history = useHistory();
 
     return (
 
@@ -17,14 +16,14 @@ function Navigation({ isLoaded }) {
                 <NavLink exact to="/"><img src={airbab} alt='airbabIcon' className='airbabIcon' /></NavLink>
                 <NavLink exact to="/"><img src={airbabname} alt='airbab' className='airbabName' /></NavLink>
             </div>
-            {sessionUser &&
-                <div className='createSpotDiv'>
-                    <button className='createSpotButton' onClick={() => history.push('/spots/new')}>Create a New Spot
-                    </button>
-                </div>}
+
             <div className='navBarRight'>
+                {sessionUser &&
+                    <div className='createSpotDiv'>
+                        <NavLink className='createSpotLink' exact to='/spots/new'>Create a New Spot</NavLink>
+                    </div>}
                 {isLoaded && (
-                    <div>
+                    <div className='profileButtonDiv'>
                         <ProfileButton user={sessionUser} />
                     </div>
                 )}

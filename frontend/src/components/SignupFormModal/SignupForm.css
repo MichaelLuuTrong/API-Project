@@ -1,0 +1,93 @@
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.signupModal {
+    height: fit-content;
+    width: 500px;
+}
+
+.firstName {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.lastName {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.email {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.username {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.password {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.confirmPassword {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.signupButtonDisabled {
+    margin: 5px;
+    margin-bottom: 30px;
+    height: 30px;
+    width: 400px;
+    box-shadow: 2px 3px 1px gray;
+}
+
+.signupButton {
+    margin: 5px;
+    margin-bottom: 30px;
+    height: 30px;
+    width: 400px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.signUpErrorsDiv {
+    display: flex;
+    justify-content: center;
+    color: red
+}
+
+.entireForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

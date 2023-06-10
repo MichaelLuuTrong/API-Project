@@ -19,7 +19,7 @@ const SpotsIndex = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <div className="allSpotsDiv">
             {
                 spotsArray.map((spot) => (
                     <div className='indivSpotDiv' title={spot.name} key={`spot/${spot.id}`} onClick={() => history.push(`/spots/${spot.id}`)}>
