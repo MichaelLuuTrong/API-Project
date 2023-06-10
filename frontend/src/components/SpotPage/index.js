@@ -71,7 +71,7 @@ const SpotPage = () => {
                         < div className='reviewedSpot'>
                             <h3><i className="fa-solid fa-star"></i>
                                 <div>{spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1)}</div>
-                                <div>•</div>
+                                <h4>•</h4>
                                 {spotObj.numReviews === 1 &&
                                     <div className='oneReview'>{spotObj.numReviews} review</div>
                                 }
@@ -86,8 +86,8 @@ const SpotPage = () => {
                     <div className='reviewsDiv'>
                         <div className='ratingNumber'>
                             <i className="fa-solid fa-star"></i>
-                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))} </h4>
-                            <h4>•</h4>
+                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))}</h4>
+                            <h4>{spotObj.avgStarRating !== null ? '•' : null}</h4>
                             <h4>
                                 {spotObj.numReviews === 1 &&
                                     <div className='oneReview'>{spotObj.numReviews} review</div>
