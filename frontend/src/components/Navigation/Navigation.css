@@ -17,12 +17,9 @@
     display: flex;
 }
 
-.fillerDiv {
-    width: 30px;
-}
-
 .createSpotDiv {
-    display: flex;
+    position: absolute;
+    right: 130px
 }
 
 .createSpotLink {
@@ -92,7 +89,7 @@
     position: absolute;
     width: 130px;
     top: 52px;
-    right: 25px;
+    right: 2px;
     border: 2px black solid;
     background-color: rgb(255, 255, 255);
 }
@@ -102,7 +99,12 @@
     width: 80px;
     height: 40px;
     top: 52px;
-    right: 25px;
+    right: 2px;
     border: 2px black solid;
     background-color: rgb(255, 255, 255);
+}
+
+.profileButtonDiv {
+    position: absolute;
+    right: 50px;
 }

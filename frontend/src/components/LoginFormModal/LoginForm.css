@@ -20,7 +20,7 @@
 }
 
 .entireModal {
-    height: 275px;
+    height: fit-content;
     width: 500px;
 }
 
@@ -61,6 +61,7 @@
 
 .demoUserButton {
     margin: 5px;
+    margin-bottom: 30px;
     height: 30px;
     width: 400px;
     box-shadow: 2px 3px 1px gray;

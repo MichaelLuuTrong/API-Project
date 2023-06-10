@@ -23,11 +23,10 @@ function Navigation({ isLoaded }) {
                         <NavLink className='createSpotLink' exact to='/spots/new'>Create a New Spot</NavLink>
                     </div>}
                 {isLoaded && (
-                    <div>
+                    <div className='profileButtonDiv'>
                         <ProfileButton user={sessionUser} />
                     </div>
                 )}
-                <div className='fillerDiv'></div>
             </div>
         </nav>
     );
