@@ -46,7 +46,7 @@ function ProfileButton({ user }) {
     return (
         <>
             <button onClick={openMenu} className="profileMenuButton changeCursor">
-                <div className="profileMenu">
+                <div className="profileMenuIcons">
                     <i className="fa-solid fa-bars" />
                     <i className="fas fa-user-circle" />
                 </div>
@@ -58,15 +58,15 @@ function ProfileButton({ user }) {
                             <p>Hello, {user.username}</p>
                             <p>{user.email}</p>
                         </div>
-                        <div className='divWithBottomLine' >
-                            <button onClick={() => history.push(`/spots/current`)}> Manage Spots</button>
+                        <div className='divWithBottomLine changeCursor'>
+                            <button onClick={() => history.push(`/spots/current`)} className="manageSpotsButton changeCursor"> Manage Spots</button>
                         </div>
-                        <div className='divWithBottomLine'>
-                            <button onClick={logout} className="changeCursor">Log Out</button>
+                        <div className='divWithBottomLine changeCursor'>
+                            <button onClick={logout} className="logOutButton changeCursor">Log Out</button>
                         </div>
                     </div>
                 ) : (
-                    <div className='login+signup'>
+                    <div className='loginSignup changeCursor'>
                         <OpenModalMenuItem
                             itemText="Log In"
                             onItemClick={closeMenu}

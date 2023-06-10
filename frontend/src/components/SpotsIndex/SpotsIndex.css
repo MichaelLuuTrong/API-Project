@@ -1,0 +1,19 @@
+.allSpotsDiv {
+    border: 3px dashed cornflowerblue;
+    width: 87%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.indivSpotDiv {
+    border: 7px dashed pink;
+    width: 10.525rem;
+    height: 16rem;
+    margin: 3rem
+}
+
+.spotPreviewImage {
+    width: 100%;
+    height: 10rem;
+    object-fit: cover
+}

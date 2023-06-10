@@ -9,6 +9,7 @@ import SpotPage from "./components/SpotPage"
 import CreateSpot from "./components/CreateSpot"
 import ManageSpots from "./components/ManageSpots"
 import UpdateSpot from "./components/UpdateSpot"
+import './App.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className='everything'>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Switch>
         <Route exact path="/" component={SpotsIndex} />
@@ -27,7 +28,7 @@ function App() {
         <Route exact path="/spots/:spotId" component={SpotPage} />
         <Route exact path="/spots/:spotId/edit" component={UpdateSpot} />
       </Switch>}
-    </>
+    </div>
   );
 }
 

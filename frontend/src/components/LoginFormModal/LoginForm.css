@@ -1,0 +1,75 @@
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.demoUserDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.entireModal {
+    height: 275px;
+    width: 500px;
+}
+
+.userNameorEmail {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+}
+
+.password {
+    border: solid black 2px;
+    margin: 5px;
+    display: flex;
+    height: 30px;
+    width: 400px;
+    background-color: rgb(236, 242, 255);
+
+}
+
+.validLoginButton {
+    margin: 5px;
+    height: 30px;
+    width: 400px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.invalidLoginButton {
+    margin: 5px;
+    height: 30px;
+    width: 400px;
+    box-shadow: 2px 3px 1px gray;
+}
+
+.demoUserButton {
+    margin: 5px;
+    height: 30px;
+    width: 400px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.errors {
+    display: flex;
+    justify-content: center;
+    color: red
+}
