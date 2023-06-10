@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spots"
 import './SpotsIndex.css'
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const SpotsIndex = () => {
     const spotsObj = useSelector(function (state) {
@@ -12,6 +12,8 @@ const SpotsIndex = () => {
 
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
     useEffect(() => {
         dispatch(fetchSpots());
     }, [dispatch]);
@@ -20,19 +22,20 @@ const SpotsIndex = () => {
         <div>
             {
                 spotsArray.map((spot) => (
-                    <div className='indivSpotDiv' key={`spot/${spot.id}`}>
+                    <div className='indivSpotDiv' title={spot.name} key={`spot/${spot.id}`} onClick={() => history.push(`/spots/${spot.id}`)}>
                         <div className='previewImageDiv'>
                             <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                         </div>
                         <div className='spotInfo'>
                             <div className='locationInfo'>
-                                <NavLink key={spot.id} to={`/spots/${spot.id}`} >
+                                <div key={spot.id} to={`/spots/${spot.id}`} >
                                     <p>{spot.city}, {spot.state}</p>
-                                </NavLink>
+                                </div>
                                 <div>
+                                    <i className="fa-solid fa-star"></i>
                                     {!spot.avgRating ? "New" :
                                         <div><p>
-                                            <i className="fa-solid fa-star"></i>{Number.parseFloat(spot.avgRating).toFixed(1)}
+                                            {(spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0') : Number.parseFloat(spot.avgRating).toFixed(1))}
                                         </p></div>}
                                 </div>
                             </div>

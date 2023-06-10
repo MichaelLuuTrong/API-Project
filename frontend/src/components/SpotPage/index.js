@@ -2,15 +2,27 @@ import { useParams } from "react-router-dom";
 import { fetchASpot } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
+import ReviewsForSpot from "../ReviewsForSpot";
+import { getReviewsThunk } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton"
+import ReviewFormModal from "../ReviewFormModal"
+
+
 
 const SpotPage = () => {
+    const dispatch = useDispatch()
     const { spotId } = useParams()
     const spotObj = useSelector((state) => state.spots.singleSpot)
-    const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user)
+    const reviews = useSelector(state => Object.values(state.reviews));
 
     useEffect(() => {
         dispatch(fetchASpot(spotId));
+        dispatch(getReviewsThunk(spotId))
     }, [dispatch, spotId]);
+
+    if (!spotObj) return null
+    if (!spotObj.SpotImages) return null
 
     const clickReserve = (e) => {
         e.preventDefault();
@@ -19,9 +31,11 @@ const SpotPage = () => {
 
     const placeholderImage = "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"
 
-    if (!spotObj) return null
-    if (!spotObj.SpotImages) return null
+    let usersWithReview = [];
 
+    for (let i = 0; i < reviews.length; i++) {
+        usersWithReview.push(reviews[i].User.id)
+    }
     return (
         <div className='singleSpotPage'>
             <div className='spotHeaderInfo'>
@@ -55,14 +69,50 @@ const SpotPage = () => {
                         </div>
                         :
                         < div className='reviewedSpot'>
-                            <h3><i className="fa-solid fa-star"></i> {spotObj.avgStarRating} • INSERT REVIEW NUM HERE</h3>
+                            <h3><i className="fa-solid fa-star"></i>
+                                <div>{spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1)}</div>
+                                <h4>•</h4>
+                                {spotObj.numReviews === 1 &&
+                                    <div className='oneReview'>{spotObj.numReviews} review</div>
+                                }
+                                {spotObj.numReviews > 1 &&
+                                    <div className='multipleReviews'>{spotObj.numReviews} reviews</div>
+                                }
+                            </h3>
                         </div>}
                     <div>
                         <button onClick={clickReserve} className='reservationButton'>Reserve</button>
                     </div>
+                    <div className='reviewsDiv'>
+                        <div className='ratingNumber'>
+                            <i className="fa-solid fa-star"></i>
+                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))}</h4>
+                            <h4>{spotObj.avgStarRating !== null ? '•' : null}</h4>
+                            <h4>
+                                {spotObj.numReviews === 1 &&
+                                    <div className='oneReview'>{spotObj.numReviews} review</div>
+                                }
+                                {spotObj.numReviews > 1 &&
+                                    <div className='multipleReviews'>{spotObj.numReviews} reviews</div>
+                                }
+                            </h4>
+                            {user && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id)) &&
+                                <div className="reviewPostDiv">
+                                    <OpenModalButton
+                                        cName="reviewPostButton changeCursor"
+                                        modalComponent={<ReviewFormModal spotId={spotId} />}
+                                        buttonText="Post Your Review"
+                                    />
+                                </div>
+                            }
+                            {user && (!spotObj.numReviews && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id))) && <p>Be the first to post a review!</p>}
+                        </div>
+                        <div className='eachReview'>
+                            <ReviewsForSpot spotId={spotId} />
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div >
     )
 }
