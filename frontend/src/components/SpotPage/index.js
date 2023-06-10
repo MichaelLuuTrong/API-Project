@@ -7,23 +7,22 @@ import { getReviewsThunk } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../ReviewFormModal"
 
+
+
 const SpotPage = () => {
+    const dispatch = useDispatch()
     const { spotId } = useParams()
     const spotObj = useSelector((state) => state.spots.singleSpot)
     const user = useSelector(state => state.session.user)
-    const dispatch = useDispatch()
     const reviews = useSelector(state => Object.values(state.reviews));
-    let usersWithReview = [];
-
-    reviews.forEach(review => {
-        usersWithReview.push(review.User.id)
-    })
-
 
     useEffect(() => {
         dispatch(fetchASpot(spotId));
         dispatch(getReviewsThunk(spotId))
     }, [dispatch, spotId]);
+
+    if (!spotObj) return null
+    if (!spotObj.SpotImages) return null
 
     const clickReserve = (e) => {
         e.preventDefault();
@@ -32,9 +31,11 @@ const SpotPage = () => {
 
     const placeholderImage = "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"
 
-    if (!spotObj) return null
-    if (!spotObj.SpotImages) return null
+    let usersWithReview = [];
 
+    for (let i = 0; i < reviews.length; i++) {
+        usersWithReview.push(reviews[i].User.id)
+    }
     return (
         <div className='singleSpotPage'>
             <div className='spotHeaderInfo'>
@@ -69,7 +70,7 @@ const SpotPage = () => {
                         :
                         < div className='reviewedSpot'>
                             <h3><i className="fa-solid fa-star"></i>
-                                <div>{spotObj.avgStarRating}</div>
+                                <div>{spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1)}</div>
                                 <div>•</div>
                                 {spotObj.numReviews === 1 &&
                                     <div className='oneReview'>{spotObj.numReviews} review</div>
@@ -85,7 +86,7 @@ const SpotPage = () => {
                     <div className='reviewsDiv'>
                         <div className='ratingNumber'>
                             <i className="fa-solid fa-star"></i>
-                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : spotObj.avgStarRating)} </h4>
+                            <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))} </h4>
                             <h4>•</h4>
                             <h4>
                                 {spotObj.numReviews === 1 &&
@@ -96,12 +97,11 @@ const SpotPage = () => {
                                 }
                             </h4>
                             {user && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id)) &&
-                                <div className="review-post-div">
+                                <div className="reviewPostDiv">
                                     <OpenModalButton
-                                        cName="review-post-button changeCursor"
+                                        cName="reviewPostButton changeCursor"
                                         modalComponent={<ReviewFormModal spotId={spotId} />}
                                         buttonText="Post Your Review"
-                                    // add more stuff here if needed
                                     />
                                 </div>
                             }

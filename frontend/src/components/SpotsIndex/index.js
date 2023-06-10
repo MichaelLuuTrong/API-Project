@@ -32,7 +32,7 @@ const SpotsIndex = () => {
                                 <div>
                                     {!spot.avgRating ? "New" :
                                         <div><p>
-                                            <i className="fa-solid fa-star"></i>{Number.parseFloat(spot.avgRating).toFixed(1)}
+                                            <i className="fa-solid fa-star"></i>{(spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0') : Number.parseFloat(spot.avgRating).toFixed(1))}
                                         </p></div>}
                                 </div>
                             </div>

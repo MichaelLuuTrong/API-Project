@@ -2,6 +2,8 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getReviewsThunk } from "../../store/reviews"
 import './ReviewsForSpot.css'
+import OpenModalButton from "../OpenModalButton"
+import DeleteReview from "../DeleteReview"
 
 const ReviewsForSpot = ({ spotId }) => {
     const dispatch = useDispatch();
@@ -50,6 +52,12 @@ const ReviewsForSpot = ({ spotId }) => {
                         <h3 className='reviewUser'>{review.User.firstName}</h3>
                         <h4 className='reviewDate'>{timestampToMonth(review.createdAt)} {timestampToYear(review.createdAt)}</h4>
                         <h5 className='reviewText'>{review.review}</h5>
+                        {user && (user.id === review.User.id) &&
+                            <OpenModalButton
+                                cName={'deleteReviewButton changeCursor'}
+                                modalComponent={<DeleteReview reviewId={review.id} spotId={spotId} />}
+                                buttonText="Delete"
+                            />}
                     </div>
                 )}
             </div>
