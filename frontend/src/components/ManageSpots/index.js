@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spots"
-import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router"
 import DeleteModal from "../DeleteSpot"
 import OpenModalButton from "../OpenModalButton"
@@ -19,9 +18,6 @@ const ManageSpots = () => {
         dispatch(fetchSpots())
     }, [dispatch])
 
-    useEffect(() => {
-        dispatch(fetchSpots())
-    }, [])
 
     if (!user) {
         return (history.push('/'))
@@ -34,21 +30,21 @@ const ManageSpots = () => {
     return (
         <div className="manageSpots">
             < div className="manageSpotsHeader">
-                <h1>Manage Your Spots</h1>
+                <h1>Manage Spots</h1>
                 <button onClick={(() => history.push('/spots/new'))}>Create a New Spot</button>
             </div >
             <div>
                 {
                     userSpots.map((spot) => (
-                        <div className='indivSpotDiv' key={`spot/${spot.id}`}>
-                            <div className='previewImageDiv'>
+                        <div className='indivSpotDiv' key={`spot/${spot.id}`} >
+                            <div className='previewImageDiv' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                             </div>
-                            <div className='spotInfo'>
+                            <div className='spotInfo' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <div className='locationInfo'>
-                                    <NavLink key={spot.id} to={`/spots/${spot.id}`} >
+                                    <div key={spot.id} to={`/spots/${spot.id}`} >
                                         <p>{spot.city}, {spot.state}</p>
-                                    </NavLink>
+                                    </div>
                                     <div>
                                         {!spot.avgRating ? "New" :
                                             <div><p>

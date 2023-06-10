@@ -19,13 +19,14 @@ function SignupFormModal() {
 
     useEffect(() => {
         const err = {};
-        if (username.length < 4) err.username = 'Username must be more than 4 characters.';
-        if (password.length < 6) err.password = 'Password must be more than 6 characters.';
-        if (email.length < 1) err.email = 'Email must not be empty.'
-        if (firstName.length < 1) err.firstName = 'First Name must not be empty.'
-        if (lastName.length < 1) err.lastName = 'Last Name must not be empty.'
+        if (username.length < 4) err.username = 'Username must be more than 4 characters in length.';
+        if (password.length < 6) err.password = 'Password must be more than 6 characters in length.';
+        if (email.length < 1) err.email = 'Please provide an email address.'
+        if (firstName.length < 1) err.firstName = 'Please provide your first name.'
+        if (lastName.length < 1) err.lastName = 'Please provide your last name.'
+        if (confirmPassword.length < 6) err.confirmPassword = 'Confirm Password must be more than 6 characters in length.';
         setErrors(err);
-    }, [username, password, email, firstName, lastName])
+    }, [username, password, email, firstName, lastName, confirmPassword])
 
     const submitPressed = (e) => {
         e.preventDefault();
@@ -50,7 +51,7 @@ function SignupFormModal() {
                 });
         }
         else return setErrors({
-            confirmPassword: "Confirm Password field must be the same as the Password field"
+            confirmPassword: 'Please make sure your password matches in both fields.'
         })
     }
 

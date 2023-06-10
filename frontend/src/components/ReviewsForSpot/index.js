@@ -44,6 +44,14 @@ const ReviewsForSpot = ({ spotId }) => {
         return year
     }
 
+    reviews.sort((spot1, spot2) => {
+        const spot1CreatedAt = new Date(spot1.createdAt).getTime();
+        const spot2CreatedAt = new Date(spot2.createdAt).getTime();
+        if (spot1CreatedAt > spot2CreatedAt) return -1;
+        if (spot1CreatedAt < spot2CreatedAt) return 1;
+        else return 0;
+    })
+
     if (Object.keys(reviews).length) {
         return (
             <div className='spotReviews'>

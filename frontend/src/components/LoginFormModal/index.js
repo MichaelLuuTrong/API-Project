@@ -60,7 +60,7 @@ function LoginFormModal() {
                 <button className="demoUserButton changeCursor" onClick={() => {
                     dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
                         .then(closeModal)
-                }}>Demo User</button>
+                }}>Log in as Demo User</button>
             </div>
         </>
     );
