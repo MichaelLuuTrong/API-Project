@@ -62,7 +62,7 @@ const ReviewsForSpot = ({ spotId }) => {
                         <div className='reviewText'>{review.review}</div>
                         {user && (user.id === review.User.id) &&
                             <OpenModalButton
-                                cName={'deleteReviewButton changeCursor'}
+                                className={'deleteReviewButton changeCursor'}
                                 modalComponent={<DeleteReview reviewId={review.id} spotId={spotId} />}
                                 buttonText="Delete"
                             />}

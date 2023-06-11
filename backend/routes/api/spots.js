@@ -428,7 +428,7 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) =>
     if (spotToAddReviewTo) {
         const newReview = await Review.create(
             {
-                spotId: req.params.spotId,
+                spotId: +req.params.spotId,
                 userId: req.user.dataValues.id,
                 review: req.body.review,
                 stars: req.body.stars
@@ -465,11 +465,14 @@ router.get('/:spotId/reviews', async (req, res) => {
 
         ]
     })
-    if (Reviews.length === 0) {
-        return res.status(404).json({
-            "message": "Spot couldn't be found"
-        })
-    } else return res.json({ Reviews })
+    //findByPk spot, then if spot doesn't exist then display this message
+    //FIX IT LATER
+    // if (!) {
+    //     return res.status(404).json({
+    //         "message": "Spot couldn't be found"
+    //     })
+    // } else
+    return res.json({ Reviews })
 
 })
 
