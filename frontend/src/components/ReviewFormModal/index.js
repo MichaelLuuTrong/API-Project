@@ -60,6 +60,7 @@ const ReviewFormModal = ({ spotId }) => {
             <form onSubmit={handleSubmit}>
                 <div className="createReviewFormDiv">
                     <textarea
+                        className='reviewTextField'
                         onChange={(e) => setReview(e.target.value)}
                         value={review}
                         placeholder="Leave your review here..."
@@ -77,7 +78,7 @@ const ReviewFormModal = ({ spotId }) => {
                                 className={
                                     hoverRating >= 1 || rating >= 1
                                         ? "fa-solid fa-star star changeCursor"
-                                        : "fa-regular fa-star star changeCursor"
+                                        : "fa-regular fa-star fa-2xl changeCursor"
                                 }
                             ></i>
                         </button>
@@ -92,7 +93,7 @@ const ReviewFormModal = ({ spotId }) => {
                                 className={
                                     hoverRating >= 2 || rating >= 2
                                         ? "fa-solid fa-star star changeCursor"
-                                        : "fa-regular fa-star star changeCursor"
+                                        : "fa-regular fa-star fa-2xl changeCursor"
                                 }
                             ></i>
                         </button>
@@ -107,7 +108,7 @@ const ReviewFormModal = ({ spotId }) => {
                                 className={
                                     hoverRating >= 3 || rating >= 3
                                         ? "fa-solid fa-star star changeCursor"
-                                        : "fa-regular fa-star star changeCursor"
+                                        : "fa-regular fa-star fa-2xl changeCursor"
                                 }
                             ></i>
                         </button>
@@ -122,7 +123,7 @@ const ReviewFormModal = ({ spotId }) => {
                                 className={
                                     hoverRating >= 4 || rating >= 4
                                         ? "fa-solid fa-star star changeCursor"
-                                        : "fa-regular fa-star star changeCursor"
+                                        : "fa-regular fa-star fa-2xl changeCursor"
                                 }
                             ></i>
                         </button>
@@ -137,16 +138,18 @@ const ReviewFormModal = ({ spotId }) => {
                                 className={
                                     hoverRating >= 5 || rating >= 5
                                         ? "fa-solid fa-star star changeCursor"
-                                        : "fa-regular fa-star star changeCursor"
+                                        : "fa-regular fa-star fa-2xl changeCursor"
                                 }
                             ></i>
                         </button>
-                        <p>Stars</p>
+                        <div className='starsText'>Stars</div>
                     </div>
                 </div>
-                <button className={Object.values(errors).length > 0 ? 'disabledSubmitButton' : 'submitButton changeCursor'} type="submit" disabled={Object.values(errors).length > 0}>
-                    Submit Your Review
-                </button>
+                <div className='submitYourReviewButtonDiv'>
+                    <button className={Object.values(errors).length > 0 ? 'disabledSubmitButton' : 'submitButton changeCursor'} type="submit" disabled={Object.values(errors).length > 0}>
+                        Submit Your Review
+                    </button>
+                </div>
             </form>
         </div>
     );
