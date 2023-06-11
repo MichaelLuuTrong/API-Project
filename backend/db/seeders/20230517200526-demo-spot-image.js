@@ -26,6 +26,11 @@ module.exports = {
         spotId: 3,
         url: 'https://photos.zillowstatic.com/fp/380087641f08c31b11564d886408951d-cc_ft_384.webp',
         preview: false,
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/b4db5900-b90e-4cc3-b12b-6d17953d0079.jpg',
+        preview: true
       }
     ], {});
   },
