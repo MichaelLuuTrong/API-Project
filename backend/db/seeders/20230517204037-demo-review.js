@@ -30,7 +30,7 @@ module.exports = {
       {
         spotId: 5,
         userId: 2,
-        review: 'The place was exactly as described, but it is unbelievably cold there. It was beautiful, peaceful, and quiet. However, it should not be legal for it to be that cold anywhere on Earth. If you like the cold, this place is perfect, though.',
+        review: 'I really loved the pool, and Cindy is a great host. However, the interior is a bit dated. The views are great and the climate is perfect. My biggest gripe is that the smell of polluted water made me feel ill at times.',
         stars: 3
       },
       {
