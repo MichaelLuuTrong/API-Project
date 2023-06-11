@@ -49,12 +49,12 @@ const SpotPage = () => {
                 </div>
                 <div className='rightPicturesDiv'>
                     <div className='rightPicturesTopDiv'>
-                        <img src={spotObj.SpotImages[1] ? spotObj.SpotImages[0].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
-                        <img src={spotObj.SpotImages[2] ? spotObj.SpotImages[0].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
+                        <img src={spotObj.SpotImages[1] ? spotObj.SpotImages[1].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
+                        <img src={spotObj.SpotImages[2] ? spotObj.SpotImages[2].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
                     </div>
                     <div className='rightPicturesBottomDiv'>
-                        <img src={spotObj.SpotImages[3] ? spotObj.SpotImages[0].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
-                        <img src={spotObj.SpotImages[4] ? spotObj.SpotImages[0].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
+                        <img src={spotObj.SpotImages[3] ? spotObj.SpotImages[3].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
+                        <img src={spotObj.SpotImages[4] ? spotObj.SpotImages[4].url : placeholderImage} alt='small spot preview' className='rightSpotImg' />
                     </div>
                 </div>
             </div>

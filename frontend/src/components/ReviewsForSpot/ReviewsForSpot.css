@@ -3,5 +3,17 @@
 }
 
 .indivReview {
-    padding-bottom: 60px;
+    padding-bottom: 50px;
+}
+
+.deleteReviewButton {
+    height: 30px;
+    width: 70px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white;
+}
+
+.reviewText {
+    padding-bottom: 10px;
 }
