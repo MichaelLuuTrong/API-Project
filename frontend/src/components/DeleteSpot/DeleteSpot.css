@@ -1,0 +1,41 @@
+.confirmDelete {
+    display: flex;
+    justify-content: center;
+}
+
+.deleteModalDiv {
+    width: 350px
+}
+
+.deleteSpotText {
+    display: flex;
+    justify-content: center;
+    padding-left: 33px;
+    padding-right: 33px
+}
+
+.optionButtons {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deleteButton {
+    margin: 5px;
+    height: 30px;
+    width: 285px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.noButton {
+    margin: 5px;
+    margin-bottom: 15px;
+    height: 30px;
+    width: 285px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white
+}
