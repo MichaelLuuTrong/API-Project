@@ -96,26 +96,28 @@ const SpotPage = () => {
 
                 <div className='reviewsDiv'>
                     <div className='ratingNumber'>
-                        <i className="fa-solid fa-star"></i>
-                        <h4>{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))}</h4>
-                        <h4>{spotObj.avgStarRating !== null ? '•' : null}</h4>
-                        <h4>
+                        <div className="ratingNumberWithoutPost">
+                            <h4><i className="fa-solid fa-star shiftUp"></i></h4>
+                            <h4 className="ratingItself">{spotObj.avgStarRating === null ? 'New' : (spotObj.avgStarRating % 1 === 0 ? (spotObj.avgStarRating + '.0') : Number.parseFloat(spotObj.avgStarRating).toFixed(1))}</h4>
+                            <h4 className='dotHeader'>{spotObj.avgStarRating !== null ? '•' : null}</h4>
                             {spotObj.numReviews === 1 &&
-                                <div className='oneReview'>{spotObj.numReviews} review</div>
+                                <h4 className='oneReviewHeader'>{spotObj.numReviews} review</h4>
                             }
                             {spotObj.numReviews > 1 &&
-                                <div className='multipleReviews'>{spotObj.numReviews} reviews</div>
+                                <h4 className='multipleReviewsHeader'>{spotObj.numReviews} reviews</h4>
                             }
-                        </h4>
-                        {user && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id)) &&
-                            <div className="reviewPostDiv">
-                                <OpenModalButton
-                                    cName="reviewPostButton changeCursor"
-                                    modalComponent={<ReviewFormModal spotId={spotId} />}
-                                    buttonText="Post Your Review"
-                                />
-                            </div>
-                        }
+                        </div>
+                        <div className='justReviewButton'>
+                            {user && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id)) &&
+                                <div className="reviewPostDiv">
+                                    <OpenModalButton
+                                        className="reviewPostButton changeCursor"
+                                        modalComponent={<ReviewFormModal spotId={spotId} />}
+                                        buttonText="Post Your Review"
+                                    />
+                                </div>
+                            }
+                        </div>
                         {user && (!spotObj.numReviews && (user.id !== spotObj.ownerId && !usersWithReview.includes(user.id))) && <p>Be the first to post a review!</p>}
                     </div>
                     <div className='eachReview'>

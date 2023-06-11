@@ -1,6 +1,5 @@
 .singleSpotPage {
     max-width: 1000px;
-    border: solid red 1px
 }
 
 .picturesDiv {
@@ -50,13 +49,6 @@
     padding-left: 10px
 }
 
-.bodySpotInfo {
-    border: yellow 1px dashed
-}
-
-.hostAndSpotInfo {
-    border: green 1px dashed
-}
 
 .reservationDiv {
     border: black 1px solid;
@@ -69,8 +61,18 @@
     align-items: center;
 }
 
-.reviewsDiv {
-    border: magenta 3px dashed
+.topOfReviewsDiv {
+    border: cyan 3px dashed;
+    display: flex
+}
+
+.ratingNumber {
+    display: flex;
+    flex-direction: column;
+}
+
+.ratingNumberWithoutPost {
+    display: flex
 }
 
 .reservationWithoutButton {
@@ -78,8 +80,17 @@
     display: flex
 }
 
+.reviewPostButton {
+    height: 30px;
+    width: 150px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white
+}
+
 .hostAndSpotInfoAndReservationBubble {
-    border: black 3px dashed;
+    padding-left: 10px;
+    border-bottom: black 1px solid;
     display: flex;
     justify-content: space-between;
 }
@@ -137,4 +148,22 @@
 
 .ownerAndSpotInfo {
     width: 62%
+}
+
+.ratingItself {
+    padding-top: 2px
+}
+
+.oneReviewHeader {
+    padding-top: 2px
+}
+
+.multipleReviewsHeader {
+    padding-top: 2px
+}
+
+.dotHeader {
+    padding-top: 2px;
+    padding-left: 5px;
+    padding-right: 5px
 }
