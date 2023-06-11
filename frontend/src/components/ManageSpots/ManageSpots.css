@@ -1,0 +1,110 @@
+.allSpotsDiv {
+    /* border: 3px dashed cornflowerblue; */
+    width: 88%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.headerOnly {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 85vw;
+}
+
+
+
+.createANewSpotButton {
+    height: 30px;
+    width: 150px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white;
+}
+
+.indivSpotDiv {
+    width: 22rem;
+    height: 26rem;
+    margin: 2rem;
+}
+
+
+
+.spotPreviewImage {
+    width: 22rem;
+    height: 22rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+
+.spotInfo {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem
+}
+
+
+.locationInfoText {
+    font-size: 20px;
+}
+
+.ratingInfo {
+    display: flex;
+    padding-top: 0.5rem;
+}
+
+.locationandSpotInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-star {
+    font-size: 20px;
+}
+
+.starRatingText {
+    font-size: 20px
+}
+
+.new {
+    font-size: 20px
+}
+
+.priceInfo {
+    display: flex
+}
+
+.justPrice {
+    font-weight: bolder;
+    font-size: 20px
+}
+
+.justNight {
+    display: flex;
+    padding-left: 0.3rem;
+    font-size: 20px
+}
+
+.updateButton {
+    margin-top: 5px;
+    margin-left: 8px;
+    margin-bottom: 15px;
+    margin-right: 8px;
+    height: 30px;
+    width: 80px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white
+}
+
+.deleteButtonForManageSpots {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 8px;
+    height: 30px;
+    width: 80px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #5d5858;
+    color: white
+}
