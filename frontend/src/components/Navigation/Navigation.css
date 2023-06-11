@@ -5,7 +5,7 @@
 .navBarFull {
     display: flex;
     width: 100vw;
-    border-bottom: 2px solid rgb(235, 231, 231);
+    border-bottom: 2px solid rgb(213, 213, 213);
     justify-content: space-between;
 }
 
@@ -69,6 +69,7 @@
 
 .divWithBottomLine {
     border-bottom: 1px black solid;
+    padding: 3px
 }
 
 .manageSpotsButton {
@@ -96,6 +97,7 @@
 
 .loginSignup {
     position: absolute;
+    padding: 3px;
     width: 80px;
     height: 40px;
     top: 52px;

@@ -4,6 +4,7 @@ import { fetchSpots } from "../../store/spots"
 import { useHistory } from "react-router"
 import DeleteModal from "../DeleteSpot"
 import OpenModalButton from "../OpenModalButton"
+import './ManageSpots.css'
 
 
 const ManageSpots = () => {
@@ -28,37 +29,43 @@ const ManageSpots = () => {
     });
 
     return (
-        <div className="manageSpots">
-            < div className="manageSpotsHeader">
-                <h1>Manage Spots</h1>
-                <button onClick={(() => history.push('/spots/new'))}>Create a New Spot</button>
+        <>
+            <div className='headerOnly'>
+                <div className='manageSpotsTitle'>
+                    <h1>Manage Spots</h1>
+                </div>
+                <button className='createANewSpotButton' onClick={(() => history.push('/spots/new'))}>Create a New Spot</button>
             </div >
-            <div>
+            <div className="allSpotsDiv">
                 {
                     userSpots.map((spot) => (
                         <div className='indivSpotDiv' key={`spot/${spot.id}`} >
                             <div className='previewImageDiv' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                             </div>
-                            <div className='spotInfo' onClick={() => history.push(`/spots/${spot.id}`)}>
-                                <div className='locationInfo'>
-                                    <div key={spot.id} to={`/spots/${spot.id}`} >
-                                        <p>{spot.city}, {spot.state}</p>
+                            <div className='spotInfo'>
+                                <div className='locationandSpotInfo'>
+                                    <div className='locationInfo'>
+                                        <div key={spot.id} to={`/spots/${spot.id}`} >
+                                            <div className='locationInfoText'>{spot.city}, {spot.state}</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        {!spot.avgRating ? "New" :
-                                            <div><p>
-                                                <i className="fa-solid fa-star"></i>{Number.parseFloat(spot.avgRating).toFixed(1)}
-                                            </p></div>}
+                                    <div className='ratingInfo'>
+                                        <i className="fa-solid fa-star"></i>
+                                        {!spot.avgRating ? <div className='new'>New</div> :
+                                            <div className='starRatingText'>
+                                                {(spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0') : Number.parseFloat(spot.avgRating).toFixed(1))}
+                                            </div>}
                                     </div>
                                 </div>
                                 <div className='priceInfo'>
-                                    <p>${spot.price} night</p>
+                                    <div className='justPrice'>${spot.price}</div>
+                                    <div className='justNight'>night</div>
                                 </div>
                             </div>
                             <button className="updateButton changeCursor" onClick={() => history.push(`/spots/${spot.id}/edit`)}>Update</button>
                             <OpenModalButton
-                                cName="deleteButton changeCursor"
+                                className="deleteButtonForManageSpots changeCursor"
                                 modalComponent={<DeleteModal spotId={spot.id} />}
                                 buttonText="Delete"
                             />
@@ -66,9 +73,8 @@ const ManageSpots = () => {
                     ))
                 }
             </div>
-        </div>
+        </>
     )
-
 }
 
 export default ManageSpots

@@ -1,19 +1,71 @@
 .allSpotsDiv {
-    border: 3px dashed cornflowerblue;
-    width: 87%;
+    /* border: 3px dashed cornflowerblue; */
+    width: 88%;
     display: flex;
     flex-wrap: wrap;
 }
 
 .indivSpotDiv {
-    border: 7px dashed pink;
-    width: 10.525rem;
-    height: 16rem;
-    margin: 3rem
+    width: 22rem;
+    height: 26rem;
+    margin: 2rem;
 }
 
+
+
 .spotPreviewImage {
-    width: 100%;
-    height: 10rem;
-    object-fit: cover
+    width: 22rem;
+    height: 22rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+
+.spotInfo {
+    /* border: 3px dashed green; */
+    padding-left: 0.5rem;
+    padding-right: 0.5rem
+}
+
+
+.locationInfoText {
+    font-size: 20px;
+}
+
+.ratingInfo {
+    display: flex;
+    padding-top: 0.5rem;
+}
+
+.locationandSpotInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-star {
+    font-size: 20px;
+}
+
+.starRatingText {
+    font-size: 20px
+}
+
+.new {
+    font-size: 20px
+}
+
+.priceInfo {
+    display: flex
+}
+
+.justPrice {
+    font-weight: bolder;
+    font-size: 20px
+}
+
+.justNight {
+    display: flex;
+    padding-left: 0.3rem;
+    font-size: 20px
 }
