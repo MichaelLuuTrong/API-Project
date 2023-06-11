@@ -1,0 +1,86 @@
+.submitButton {
+    margin: 5px;
+    height: 30px;
+    width: 300px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.disabledSubmitButton {
+    margin: 5px;
+    height: 30px;
+    width: 300px;
+    box-shadow: 2px 3px 1px gray;
+}
+
+.createReviewModalDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createReviewFormDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 375px
+}
+
+.errors-shown {
+    color: red
+}
+
+.errors-hidden {
+    display: none
+}
+
+.reviewTextField {
+    width: 300px;
+    border: solid black 2px;
+    display: flex;
+    height: 100px;
+    background-color: rgb(236, 242, 255);
+}
+
+.submitYourReviewButtonDiv {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+/* .fa-solid {
+    width: 15px
+}
+
+.fa-regular {
+    width: 20px
+} */
+
+.solid {
+    height: 30px;
+    width: 30px;
+    background: transparent;
+    border: transparent
+}
+
+.empty {
+    height: 30px;
+    width: 30px;
+    background: transparent;
+    border: transparent
+}
+
+.createReviewDiv {
+    margin: 5px;
+    padding: 5px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.starsText {
+    padding-left: 10px
+}

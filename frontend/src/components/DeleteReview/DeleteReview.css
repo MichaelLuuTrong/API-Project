@@ -1,20 +1,18 @@
-.confirmDelete {
+.confirmDeleteDiv {
     display: flex;
     justify-content: center;
 }
 
-.deleteModalDiv {
+.deleteReviewModalDiv {
     width: 350px
 }
 
-.deleteSpotText {
+.deleteReviewText {
     display: flex;
     justify-content: center;
-    padding-left: 33px;
-    padding-right: 33px
 }
 
-.optionButtons {
+.deleteReviewModalButtonsDiv {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -30,7 +28,7 @@
     color: white
 }
 
-.noButton {
+.closeButton {
     margin: 5px;
     margin-bottom: 15px;
     height: 30px;
