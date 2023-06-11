@@ -20,7 +20,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'Sunset Ridge',
-        description: 'A gentle stream feeds into the placid pond surrounding this designer mountain estate with panoramic views of the San Juan Mountains. Take a glass of vino across a foot bridge and sip around the sunken fire pit, or head inside the soaring interiors to admire the wild beauty of the West through floor-to-ceiling glass walls. You’re minutes from the slopes, with the Alta Lakes a short drive further.',
+        description: 'A gentle stream feeds into the placid pond surrounding this designer mountain estate with panoramic views. Admire the wild beauty of the West through glass walls. You’re minutes from the slopes, with the Alta Lakes a short drive further.',
         price: 4000,
       },
       {
@@ -32,7 +32,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'Pyramid House',
-        description: 'Architectural masterpiece (b. 1961) w/ spectacular views and privacy. A soaring ceiling and a wall of glass overlooking the dunes, the ocean and the bay. Beneath, the enormous master suite looks out to the dunes on one side and the pool deck on the other. Across the pool deck are 2 guest cabana bedrooms and a bathroom. Cooling ocean breezes flow day and night in this sophisticated, relaxed compound. Multiple work areas in the home.',
+        description: 'A soaring ceiling and a wall of glass overlooking the dunes, the ocean and the bay. Beneath, the enormous master suite looks out to the dunes on one side and the pool deck on the other. Cooling ocean breezes flow day and night here.',
         price: 3400,
       },
       {
@@ -44,7 +44,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'The Angelano',
-        description: 'This Hollywood Hills mansion features a bird’s eye view of the glittering Los Angeles skyline. Retractable doors create an effortless transition between the modern interior and the outdoor living space. Sun beds and desert shrubs surround the silky turquoise pool and bubbling hot tub. Shop in Beverly Hills, hike through Griffith Park, or venture towards Santa Monica for a day of sand and surf.',
+        description: 'This Hollywood Hills mansion features a view of the Los Angeles skyline. Glass doors aid the effortless transition between the modern interior and the outdoor living space. Sun beds surround the silky turquoise pool and bubbling hot tub. ',
         price: 2150,
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'Big Sky Chalet',
-        description: 'The naturally rugged landscape of Big Sky, Montana surrounds this alpine escape. Snow-dusted evergreens sway in the crisp breeze as you head to the slopes. Après-ski, sink into the bubbling hot tub to soothe sore muscles, perhaps with a glass of champagne. Follow the heated walkway to the patio where sharp mountain peaks soar. A stone-stacked fireplace adds a crackle to the cozy, open interior.',
+        description: 'The naturally rugged landscape of Big Sky, Montana surrounds this alpine escape. Sink into the bubbling hot tub to soothe sore muscles. Follow the heated walkway to the patio where sharp mountain peaks soar. ',
         price: 771,
       },
       {
@@ -68,7 +68,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'Moorings Villa',
-        description: 'Soaring palm trees and a manicured garden lead the way to this Naples, Florida mansion. Views of the glistening bay stretch beyond the backyard. The elegant interior features sumptuous décor and an airy ambiance. Explore the area, hopping between posh boutiques, quaint cafés, and waterfront eateries. Pristine golf courses sprawl nearby. Champagne is the perfect accompaniment to the vivid sunset.',
+        description: 'Soaring palm trees and a manicured garden lead the way to this Naples, Florida mansion. Views of the glistening bay stretch beyond the backyard. The elegant interior features sumptuous décor and an airy ambiance. ',
         price: 1640,
       },
       {
@@ -80,7 +80,7 @@ module.exports = {
         lat: 40.68315,
         lng: -73.9916,
         name: 'Beverly Hills Maison',
-        description: 'Inspired by the French countryside, this Beverly Hills residence exudes the ideal mix of modernity and charm. Canyon landscapes undulate beyond the soaring windows; inside, the home is drenched in natural light. Slip into the zero-edge pool whenever you need an instant refresh. Trees cast dappled shadows on the lavish yard. Access to shopping, sights, and restaurants are mere minutes away by car.',
+        description: 'Inspired by the French countryside, this Beverly Hills residence exudes the ideal mix of modernity and charm. Slip into the zero-edge pool whenever you need an instant refresh. Access to shopping, sights, and restaurants are mere minutes away by car.',
         price: 7224,
       },
 
