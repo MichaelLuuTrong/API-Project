@@ -89,15 +89,16 @@ const CreateSpot = () => {
         <div onSubmit={formSubmit} className='formDiv'>
             <form className='form'>
                 <h1>Create a New Spot</h1>
-                {submitted && (Object.values(responseErrors).length) ? <p>{Object.values(responseErrors)}</p> : null}
+                {submitted && (Object.values(responseErrors).length) ? <div>{Object.values(responseErrors)}</div> : null}
                 <div className='formSubmissionDiv'>
                     <h2>Where's your place located?</h2>
                     <p>Guests will only get your exact address once they booked a reservation.</p>
-                    <div>
+                    <div className="countryLabelandError">
                         <label>Country</label>
-                        {submitted ? <p className='validationerror'>{errors.country}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.country}</div> : null}
                     </div>
                     <input
+                        className='countryField'
                         type="text"
                         name="country"
                         placeholder="Country"
@@ -105,12 +106,13 @@ const CreateSpot = () => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
                 </div>
-                <div>
-                    <div>
+                <div >
+                    <div className="streetAddressandError">
                         <label>Street Address</label>
-                        {submitted ? <p className='validationerror'>{errors.address}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.address}</div> : null}
                     </div>
                     <input
+                        className='addressField'
                         type="text"
                         name="address"
                         placeholder="Address"
@@ -118,125 +120,145 @@ const CreateSpot = () => {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </div>
-                <div>
+                <div className="cityandStateDiv">
                     <div>
-                        <label>City</label>
-                        {submitted ? <p className='validationerror'>{errors.city}</p> : null}
+                        <div className="cityLabelandError">
+                            <label>City</label>
+                            {submitted ? <div className='validationerror'>{errors.city}</div> : null}
+                        </div>
+                        <input
+                            className='cityField'
+                            type="text"
+                            name="city"
+                            placeholder="City"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                        />
                     </div>
-                    <input
-                        type="text"
-                        name="city"
-                        placeholder="City"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                    />
-                </div>
-                <div>
+                    <div className='comma'>,</div>
                     <div>
-                        <label>State</label>
-                        {submitted ? <p className='validationerror'>{errors.state}</p> : null}
+                        <div className="stateLabelandError">
+                            <label>State</label>
+                            {submitted ? <div className='validationerror'>{errors.state}</div> : null}
+                        </div>
+                        <input
+                            className='stateField'
+                            type="text"
+                            name="state"
+                            placeholder="State"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                        />
                     </div>
-                    <input
-                        type="text"
-                        name="state"
-                        placeholder="State"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                    />
                 </div>
+                <div className='lineDiv'></div>
                 <div className='formSubmissionDiv'>
                     <h2>Describe your place to guests</h2>
                     <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neigborhood.</p>
                     <textarea
+                        className='descriptionField'
                         name="description"
                         value={description}
-                        placeholder="Please write at least 30 characters"
+                        placeholder="Description"
                         onChange={(e) => setDescription(e.target.value)}
                         rows="6"
                         cols="50"
                     >
                     </textarea>
-                    {submitted ? <p className='validationerror'>{errors.description}</p> : null}
+                    {submitted ? <div className='validationerror'>{errors.description}</div> : null}
                 </div>
+                <div className='lineDiv'></div>
                 <div className='formSubmissionDiv'>
                     <h2>Create a title for your spot</h2>
                     <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
                     <input
+                        className='nameField'
                         type="text"
                         name="name"
                         placeholder="Name of your spot"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    {submitted ? <p className='validationerror'>{errors.name}</p> : null}
+                    {submitted ? <div className='validationerror'>{errors.name}</div> : null}
                 </div>
+                <div className='lineDiv'></div>
                 <div className='formSubmissionDiv'>
                     <h2>Set a base price for your spot</h2>
                     <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-                    <p>$</p>
-                    <input
-                        type="number"
-                        min="0.01"
-                        step="0.01"
-                        name="price"
-                        placeholder="Price per night (USD)"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
-                    {submitted ? <p className='validationerror'>{errors.price}</p> : null}
+                    <div className='priceDiv'>
+                        <div className='dollarSign'>$</div>
+                        <input
+                            className='priceField'
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            name="price"
+                            placeholder="Price per night (USD)"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </div>
+                    {submitted ? <div className='validationerror'>{errors.price}</div> : null}
                 </div>
+                <div className='lineDiv'></div>
                 <div>
                     <h2>Liven up your spot with photos</h2>
                     <p>Submit a link to at least one photo to publish your spot.</p>
                     <div>
                         <input
+                            className='imageField'
                             type='text'
                             name='previewImage'
                             placeholder='Preview Image URL'
                             value={previewImage}
                             onChange={(e) => setPreviewImage(e.target.value)}
                         ></input>
-                        {submitted ? <p className='validationerror'>{errors.previewImage}</p> : null}
-                        {submitted ? <p className='validationerror'>{errors.previewImageValidation}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.previewImage}</div> : null}
+                        {submitted ? <div className='validationerror'>{errors.previewImageValidation}</div> : null}
                         <input
-
+                            className='imageField'
                             type='text'
                             name='image1'
                             placeholder='Image URL'
                             value={image1}
                             onChange={(e) => setImage1(e.target.value)}
                         ></input>
-                        {submitted ? <p className='validationerror'>{errors.image1Validation}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.image1Validation}</div> : null}
                         <input
+                            className='imageField'
                             type='text'
                             name='image2'
                             placeholder='Image URL'
                             value={image2}
                             onChange={(e) => setImage2(e.target.value)}
                         ></input>
-                        {submitted ? <p className='validationerror'>{errors.image2Validation}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.image2Validation}</div> : null}
 
                         <input
+                            className='imageField'
                             type='text'
                             name='image3'
                             placeholder='Image URL'
                             value={image3}
                             onChange={(e) => setImage3(e.target.value)}
                         ></input>
-                        {submitted ? <p className='validationerror'>{errors.image3Validation}</p> : null}
-
+                        {submitted ? <div className='validationerror'>{errors.image3Validation}</div> : null}
                         <input
+                            className='imageField'
                             type='text'
                             name='image4'
                             placeholder='Image URL'
                             value={image4}
                             onChange={(e) => setImage4(e.target.value)}
                         ></input>
-                        {submitted ? <p className='validationerror'>{errors.image4Validation}</p> : null}
+                        {submitted ? <div className='validationerror'>{errors.image4Validation}</div> : null}
 
                     </div>
                 </div>
-                <button type='submit'>Create Spot</button>
+                <div className='lineDiv'></div>
+                <div className='createSpotButtonDiv'>
+                    <button className="createSpotButton" type='submit'>Create Spot</button>
+                </div>
             </form >
         </div >
     )

@@ -1,0 +1,139 @@
+.cityandStateDiv {
+    display: flex;
+    width: 100%
+}
+
+.cityLabelandError {
+    display: flex
+}
+
+.countryLabelandError {
+    display: flex
+}
+
+.streetAddressandError {
+    display: flex
+}
+
+.stateLabelandError {
+    display: flex
+}
+
+.formDiv {
+    width: 575px;
+}
+
+.validationerror {
+    color: #FF5A5F;
+    padding-left: 5px
+}
+
+.description {
+    width: 99%
+}
+
+.priceDiv {
+    display: flex
+}
+
+.lineDiv {
+    display: flex;
+    background-color: black;
+    height: 2px;
+    margin: 10px;
+}
+
+.createSpotButtonDiv {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.createSpotButton {
+    margin: 5px;
+    height: 30px;
+    width: 100px;
+    box-shadow: 2px 3px 1px gray;
+    background-color: #FF5A5F;
+    color: white
+}
+
+.comma {
+    display: flex;
+    align-items: flex-end;
+    font-size: x-large;
+    padding-right: 10px
+}
+
+.cityField {
+    width: 400px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.stateField {
+    width: 142px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.addressField {
+    width: 566px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.countryField {
+    width: 566px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.descriptionField {
+    width: 566px;
+    border: solid black 2px;
+    display: flex;
+    height: 140px;
+    background-color: rgb(236, 242, 255);
+}
+
+.nameField {
+    width: 566px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.imageField {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    width: 566px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.priceField {
+    width: 548px;
+    border: solid black 2px;
+    display: flex;
+    height: 20px;
+    background-color: rgb(236, 242, 255);
+}
+
+.dollarSign {
+    display: flex;
+    font-size: x-large;
+    padding-left: 3px;
+    padding-right: 3px
+}
