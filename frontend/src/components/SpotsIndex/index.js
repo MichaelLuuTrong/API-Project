@@ -27,20 +27,23 @@ const SpotsIndex = () => {
                             <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                         </div>
                         <div className='spotInfo'>
-                            <div className='locationInfo'>
-                                <div key={spot.id} to={`/spots/${spot.id}`} >
-                                    <p>{spot.city}, {spot.state}</p>
+                            <div className='locationandSpotInfo'>
+                                <div className='locationInfo'>
+                                    <div key={spot.id} to={`/spots/${spot.id}`} >
+                                        <div className='locationInfoText'>{spot.city}, {spot.state}</div>
+                                    </div>
                                 </div>
-                                <div>
+                                <div className='ratingInfo'>
                                     <i className="fa-solid fa-star"></i>
-                                    {!spot.avgRating ? "New" :
-                                        <div><p>
+                                    {!spot.avgRating ? <div className='new'>New</div> :
+                                        <div className='starRatingText'>
                                             {(spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0') : Number.parseFloat(spot.avgRating).toFixed(1))}
-                                        </p></div>}
+                                        </div>}
                                 </div>
                             </div>
                             <div className='priceInfo'>
-                                <p>${spot.price} night</p>
+                                <div className='justPrice'>${spot.price}</div>
+                                <div className='justNight'>night</div>
                             </div>
                         </div>
                     </div>

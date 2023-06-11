@@ -59,7 +59,7 @@ const ReviewsForSpot = ({ spotId }) => {
                     <div className='indivReview' key={review.id}>
                         <h3 className='reviewUser'>{review.User.firstName}</h3>
                         <h4 className='reviewDate'>{timestampToMonth(review.createdAt)} {timestampToYear(review.createdAt)}</h4>
-                        <h5 className='reviewText'>{review.review}</h5>
+                        <div className='reviewText'>{review.review}</div>
                         {user && (user.id === review.User.id) &&
                             <OpenModalButton
                                 cName={'deleteReviewButton changeCursor'}

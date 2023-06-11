@@ -1,1 +1,68 @@
-/* TODO Add site wide styles */
+p {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h4 {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+h5 {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+label {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+input {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+button {
+    font-family: 'Arial', sans-serif;
+}
+
+span {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+textarea {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+a {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+div {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
