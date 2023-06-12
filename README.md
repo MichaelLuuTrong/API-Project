@@ -5,6 +5,8 @@
 <!-- # `<name of application here>` -->
 <!--!!END_ADD -->
 ## Introduction
+Airbab is a clone of Airbnb. At the moment, users can see, create, update, and delete spots. They can also see, write, and delete reviews.
+More features to come.
 ![image](https://github.com/MichaelLuuTrong/API-Project/assets/117414348/779a541a-308b-4b00-aebb-6c5a81ce76a2)
 
 ## Technologies Used
