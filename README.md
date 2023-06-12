@@ -15,9 +15,19 @@
 - Redux
 - SQL
 ## Instructions for Launching the Full Application Locally
-1. Download the project
-2. Navigate to the frontend and backend folders
-3. Run the command 'npm start' in both folder, beginning with the backend
+1. Clone this repository
+2. Navigate to the frontend and backend folders in two seperate terminals
+3. add a dotenv file with the following information:
+PORT=[choose your port number here]
+DB_FILE=db/dev.db
+JWT_SECRET=[insert secret characters here]
+JWT_EXPIRES_IN=[insert large number here, greater than 600000]
+SCHEMA=[insert name of your schema here]
+4. In only backend terminal, run the following commands:
+- npx dotenv sequelize db:migrate
+- npx dotenv sequelize db:seed:all
+5. Run the command 'npm start' in both terminals, backend first
+6. App should be good to go!
 
 ## Database Schema Design
 
