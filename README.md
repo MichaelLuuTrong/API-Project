@@ -1,10 +1,12 @@
 <!--!!START SILENT -->
-# AirBnB Clone
+# AirBaB
 <!--!!END -->
 <!--!!ADD -->
 <!-- # `<name of application here>` -->
 <!--!!END_ADD -->
-
+## Introduction
+## Technologies Used
+## Instructions for launching the full application locally
 ## Database Schema Design
 
 <!--!!START SILENT -->
