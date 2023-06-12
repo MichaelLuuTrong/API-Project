@@ -11,7 +11,9 @@
     margin: 2rem;
 }
 
-
+.changeCursor {
+    cursor: pointer;
+}
 
 .spotPreviewImage {
     width: 22rem;

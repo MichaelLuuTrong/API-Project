@@ -39,11 +39,11 @@ const ManageSpots = () => {
             <div className="allSpotsDiv">
                 {
                     userSpots.map((spot) => (
-                        <div className='indivSpotDiv' onClick={() => history.push(`/spots/${spot.id}`)} key={`spot/${spot.id}`} >
-                            <div className='previewImageDiv' >
+                        <div className='indivSpotDiv' key={`spot/${spot.id}`} >
+                            <div className='previewImageDiv changeCursor' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                             </div>
-                            <div className='spotInfo'>
+                            <div className='spotInfo changeCursor' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <div className='locationandSpotInfo'>
                                     <div className='locationInfo'>
                                         <div key={spot.id} to={`/spots/${spot.id}`} >
