@@ -12,7 +12,9 @@
     width: 85vw;
 }
 
-
+.changeCursor {
+    cursor: pointer;
+}
 
 .createANewSpotButton {
     height: 30px;
@@ -27,7 +29,6 @@
     height: 26rem;
     margin: 2rem;
 }
-
 
 
 .spotPreviewImage {

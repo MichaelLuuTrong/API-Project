@@ -22,12 +22,12 @@ const SpotsIndex = () => {
         <div className="allSpotsDiv">
             {
                 spotsArray.map((spot) => (
-                    <div className='indivSpotDiv' title={spot.name} key={`spot/${spot.id}`} onClick={() => history.push(`/spots/${spot.id}`)}>
-                        <div className='previewImageDiv'>
+                    <div className='indivSpotDiv changeCursor' title={spot.name} key={`spot/${spot.id}`}>
+                        <div className='previewImageDiv' onClick={() => history.push(`/spots/${spot.id}`)}>
                             <img src={spot.previewImage} alt={spot.name} className='spotPreviewImage' />
                         </div>
                         <div className='spotInfo'>
-                            <div className='locationandSpotInfo'>
+                            <div className='locationandSpotInfo' onClick={() => history.push(`/spots/${spot.id}`)}>
                                 <div className='locationInfo'>
                                     <div key={spot.id} to={`/spots/${spot.id}`} >
                                         <div className='locationInfoText'>{spot.city}, {spot.state}</div>
