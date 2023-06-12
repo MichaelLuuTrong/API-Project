@@ -14,7 +14,11 @@
 - React
 - Redux
 - SQL
-## Instructions for launching the full application locally
+## Instructions for Launching the Full Application Locally
+1. Download the project
+2. Navigate to the frontend and backend folders
+3. Run the command 'npm start' in both folder, beginning with the backend
+
 ## Database Schema Design
 
 <!--!!START SILENT -->
