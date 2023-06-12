@@ -5,6 +5,8 @@
 <!-- # `<name of application here>` -->
 <!--!!END_ADD -->
 ## Introduction
+![image](https://github.com/MichaelLuuTrong/API-Project/assets/117414348/779a541a-308b-4b00-aebb-6c5a81ce76a2)
+
 ## Technologies Used
 ## Instructions for launching the full application locally
 ## Database Schema Design
